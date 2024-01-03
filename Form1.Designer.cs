@@ -37,13 +37,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.backgroundFone = new System.ComponentModel.BackgroundWorker();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonConnect
             // 
             this.buttonConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonConnect.Location = new System.Drawing.Point(658, 58);
+            this.buttonConnect.Location = new System.Drawing.Point(18, 93);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(94, 23);
             this.buttonConnect.TabIndex = 0;
@@ -96,6 +98,14 @@
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.buttonConnect);
+            this.panel1.Location = new System.Drawing.Point(322, 130);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(132, 311);
+            this.panel1.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -104,11 +114,11 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(810, 578);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxPorts);
             this.Controls.Add(this.buttonUpdatePorts);
-            this.Controls.Add(this.buttonConnect);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -116,6 +126,7 @@
             this.Name = "Form1";
             this.Text = "Экструдер для производства рукавных пленок";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -130,6 +141,7 @@
         private System.Windows.Forms.Label label1;
         private System.ComponentModel.BackgroundWorker backgroundFone;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
