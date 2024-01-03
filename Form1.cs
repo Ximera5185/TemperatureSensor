@@ -15,7 +15,7 @@ namespace TemperatureSensor
     {
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent();   
         }
 
         private void buttonConnect_Click(object sender, EventArgs e)
@@ -65,6 +65,16 @@ namespace TemperatureSensor
             string temp = MySerialPort.ReadLine();
 
             label1.Text = "Температура зоны нагрева " + temp + " Градусов";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+           
         }
     }
 }
