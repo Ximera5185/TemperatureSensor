@@ -15,66 +15,75 @@ namespace TemperatureSensor
     {
         public Form1()
         {
-            InitializeComponent();   
+            InitializeComponent();
         }
-
+        
         private void buttonConnect_Click(object sender, EventArgs e)
         {
             if (buttonConnect.Text == "Подключиться")
             {
                 try
                 {
-                    MySerialPort.PortName = comboBoxPorts.Text;
-                    MySerialPort.Open();
-                    comboBoxPorts.Enabled = false;
-                    buttonUpdatePorts.Enabled = false;
+                    string [] ports = SerialPort.GetPortNames();
+
+                    foreach (string port in ports)
+                    {
+                        MySerialPort.PortName = port;
+                        MySerialPort.Open();
+
+                        if (MySerialPort.BytesToRead > 0)
+                        {
+                            string kay = MySerialPort.ReadLine();
+
+                            if (kay [0] == 'A')
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                MySerialPort.Close();
+                            }
+                        }
+                        else
+                        {
+                            MySerialPort.Close();
+                        }
+                    }
+
                     buttonConnect.Text = "Отключиться";
                 }
-                catch 
+                catch
                 {
-
                     MessageBox.Show("Ошибка подключения");
                 }
             }
             else if (buttonConnect.Text == "Отключиться")
             {
                 MySerialPort.Close();
-                comboBoxPorts.Enabled = true;
-                buttonUpdatePorts.Enabled = true;
-                label1.Text = "";
+ 
                 buttonConnect.Text = "Подключиться";
             }
         }
-
-        private void buttonUpdatePorts_Click(object sender, EventArgs e)
-        {
-            string [] ports = SerialPort.GetPortNames();
-
-            comboBoxPorts.Text = "";
-            comboBoxPorts.Items.Clear();
-
-            if (ports.Length != 0)
-            {
-                comboBoxPorts.Items.AddRange(ports);
-                comboBoxPorts.SelectedIndex = 0;
-            }
-        }
-
+  
         private void MySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            string temp = MySerialPort.ReadLine();
+            /*string temp = MySerialPort.ReadLine();*/
 
-            label1.Text = "Температура зоны нагрева " + temp + " Градусов";
+            /*int temperature = Convert.ToInt32(temp);*/
+
+            /*label1.Text = "Температура зоны нагрева " + temp + " Градусов";*/
+            /* label1.Invoke((MethodInvoker) (() => label1.Text = "Температура зоны нагрева " + temp + " Градусов"));*/
+            label1.Text = MySerialPort.ReadLine();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-           
+
         }
     }
 }
