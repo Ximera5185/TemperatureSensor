@@ -16,11 +16,11 @@ namespace TemperatureSensor
         public Form1()
         {
             InitializeComponent();
-        }      
+        }
 
         int temperature;
 
-        int criticalTemperature = 100;
+        readonly int criticalTemperature = 100;
 
         string inputDataPort = "";
         private void ConnectButtonClick(object sender, EventArgs e)
@@ -85,7 +85,7 @@ namespace TemperatureSensor
             }
         }
 
-        private void ChangeColor(int temperature, int criticalTemperature) 
+        private void ChangeColor(int temperature, int criticalTemperature)
         {
             if (temperature >= criticalTemperature)
             {
@@ -99,6 +99,6 @@ namespace TemperatureSensor
 
                 label2.ForeColor = Color.FromArgb(58, 204, 41);
             }
-        } 
+        }
     }
 }
