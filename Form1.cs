@@ -17,7 +17,13 @@ namespace TemperatureSensor
         {
             InitializeComponent();
         }
+        SettingsForm settingsForm = new SettingsForm();
 
+        int temperature;
+
+        int criticalTemperature = 100;
+
+        string inputDataPort = "";
         private void ConnectButtonClick(object sender, EventArgs e)
         {
             if (buttonConnect.Text == "Подключиться")
@@ -29,6 +35,8 @@ namespace TemperatureSensor
                     mySerialPort.Open();
 
                     showBoxPorts.Enabled = false;
+
+                    updatePortList.Enabled = false;
 
                     buttonConnect.Text = "Отключиться";
                 }
@@ -43,6 +51,8 @@ namespace TemperatureSensor
 
                 showBoxPorts.Enabled = true;
 
+                updatePortList.Enabled = true;
+
                 label1.Text = "";
 
                 buttonConnect.Text = "Подключиться";
@@ -51,17 +61,13 @@ namespace TemperatureSensor
 
         private void MySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            label1.Text = mySerialPort.ReadLine();
-        }
+            temperature = Convert.ToInt32(mySerialPort.ReadLine());
 
-        private void button1_Click(object sender, EventArgs e)
-        {
+            inputDataPort = Convert.ToString(temperature);
 
-        }
+            label1.Text = inputDataPort;
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-          
+            ChangeColor(temperature, criticalTemperature);
         }
 
         private void UpdatePortListClick(object sender, EventArgs e)
@@ -79,5 +85,27 @@ namespace TemperatureSensor
                 showBoxPorts.SelectedIndex = 0;
             }
         }
+
+        private void ChangeColor(int temperature, int criticalTemperature) 
+        {
+            if (temperature >= criticalTemperature)
+            {
+                label1.ForeColor = Color.Red;
+
+                label2.ForeColor = Color.Red;
+            }
+            else
+            {
+                label1.ForeColor = Color.FromArgb(58, 204, 41);
+
+                label2.ForeColor = Color.FromArgb(58, 204, 41);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            settingsForm.Show();
+        }
+       
     }
 }
