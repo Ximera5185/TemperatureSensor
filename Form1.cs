@@ -99,6 +99,6 @@ namespace TemperatureSensor
 
                 label2.ForeColor = Color.FromArgb(58, 204, 41);
             }
-        }
+        } 
     }
 }
