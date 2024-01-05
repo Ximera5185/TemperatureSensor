@@ -16,8 +16,7 @@ namespace TemperatureSensor
         public Form1()
         {
             InitializeComponent();
-        }
-        SettingsForm settingsForm = new SettingsForm();
+        }      
 
         int temperature;
 
@@ -101,11 +100,5 @@ namespace TemperatureSensor
                 label2.ForeColor = Color.FromArgb(58, 204, 41);
             }
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            settingsForm.Show();
-        }
-       
     }
 }
