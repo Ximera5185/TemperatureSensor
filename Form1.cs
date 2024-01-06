@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
+using System.Threading;
 
 namespace TemperatureSensor
 {
@@ -23,40 +24,6 @@ namespace TemperatureSensor
         readonly int criticalTemperature = 100;
 
         string inputDataPort = "";
-        private void ConnectButtonClick(object sender, EventArgs e)
-        {
-            if (buttonConnect.Text == "Подключиться")
-            {
-                try
-                {
-                    mySerialPort.PortName = showBoxPorts.Text;
-
-                    mySerialPort.Open();
-
-                    showBoxPorts.Enabled = false;
-
-                    updatePortList.Enabled = false;
-
-                    buttonConnect.Text = "Отключиться";
-                }
-                catch
-                {
-                    MessageBox.Show("Ошибка подключения");
-                }
-            }
-            else if (buttonConnect.Text == "Отключиться")
-            {
-                mySerialPort.Close();
-
-                showBoxPorts.Enabled = true;
-
-                updatePortList.Enabled = true;
-
-                label1.Text = "";
-
-                buttonConnect.Text = "Подключиться";
-            }
-        }
 
         private void MySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
@@ -98,6 +65,117 @@ namespace TemperatureSensor
                 label1.ForeColor = Color.FromArgb(58, 204, 41);
 
                 label2.ForeColor = Color.FromArgb(58, 204, 41);
+            }
+        }
+
+        private void ConnectButtonClick(object sender, EventArgs e)
+        {
+            if (buttonConnect.Text == "Подключиться")
+            {
+                try
+                {
+                    mySerialPort.PortName = showBoxPorts.Text;
+
+                    mySerialPort.Open();
+
+                    showBoxPorts.Enabled = false;
+
+                    updatePortList.Enabled = false;
+
+                    buttonConnect.Text = "Отключиться";
+                }
+                catch
+                {
+                    MessageBox.Show("Ошибка подключения");
+                }
+            }
+            else if (buttonConnect.Text == "Отключиться")
+            {
+                mySerialPort.Close();
+
+                showBoxPorts.Enabled = true;
+
+                updatePortList.Enabled = true;
+
+                label1.Text = "";
+
+                buttonConnect.Text = "Подключиться";
+            }
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            string comPort = "COM5";
+
+            /*foreach (string port in SerialPort.GetPortNames())
+            {
+                 SerialPort serialPort = new SerialPort(port);
+
+                if (serialPort.IsOpen == false)
+                {
+                    serialPort.Open();
+
+                    serialPort.BaudRate = 9600;
+                }
+
+                Thread.Sleep(1000);
+
+                if (serialPort.BytesToRead > 0)
+                {
+                    Console.WriteLine($"Слышу порт {port}");
+
+                    string package = serialPort.ReadLine();
+
+                    if (true)
+                    {
+                         // mySerialPort.Open();
+                       *//* comPort = port;*//*
+
+                        // showBoxPorts.Text = port;
+
+                        //break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Порт {port} молчит");
+
+                    serialPort.Close();
+                }
+            }*/
+
+            // showBoxPorts.Text = "COM5";
+
+            if (buttonConnect.Text == "Подключиться")
+            {
+                try
+                {
+                    // mySerialPort.PortName = showBoxPorts.Text;
+                    mySerialPort.PortName = comPort;
+                    mySerialPort.Open();
+
+                    showBoxPorts.Enabled = false;
+
+                    updatePortList.Enabled = false;
+
+                    buttonConnect.Text = "Отключиться";
+                }
+                catch
+                {
+                    MessageBox.Show("Ошибка подключения");
+                }
+            }
+            else if (buttonConnect.Text == "Отключиться")
+            {
+                mySerialPort.Close();
+
+                showBoxPorts.Enabled = true;
+
+                updatePortList.Enabled = true;
+
+                label1.Text = "";
+
+                buttonConnect.Text = "Подключиться";
             }
         }
     }

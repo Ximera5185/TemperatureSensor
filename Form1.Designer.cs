@@ -39,6 +39,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.mySerialPort = new System.IO.Ports.SerialPort(this.components);
+            this.AutoСonnection = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -74,6 +75,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.panel1.Controls.Add(this.AutoСonnection);
             this.panel1.Controls.Add(this.buttonConnect);
             this.panel1.Controls.Add(this.updatePortList);
             this.panel1.Controls.Add(this.showBoxPorts);
@@ -155,6 +157,16 @@
             // 
             this.mySerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.MySerialPort_DataReceived);
             // 
+            // AutoСonnection
+            // 
+            this.AutoСonnection.Location = new System.Drawing.Point(0, 198);
+            this.AutoСonnection.Name = "AutoСonnection";
+            this.AutoСonnection.Size = new System.Drawing.Size(141, 23);
+            this.AutoСonnection.TabIndex = 8;
+            this.AutoСonnection.Text = "Автоподключение";
+            this.AutoСonnection.UseVisualStyleBackColor = true;
+            this.AutoСonnection.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -189,6 +201,7 @@
         private System.Windows.Forms.ComboBox showBoxPorts;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button AutoСonnection;
     }
 }
 
