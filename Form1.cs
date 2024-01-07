@@ -122,7 +122,7 @@ namespace TemperatureSensor
 
                 if (serialPort.BytesToRead > 0)
                 {
-                   // MessageBox.Show($"Слышу порт {port}");
+                   
 
                     string package = serialPort.ReadLine();
 
@@ -145,15 +145,15 @@ namespace TemperatureSensor
                 }
             }
 
-           // MessageBox.Show($"Найден порт {comPort}");
+           
 
-            // showBoxPorts.Text = "COM5";
+           
 
             if (buttonConnect.Text == "Подключиться")
             {
                 try
                 {
-                    // mySerialPort.PortName = showBoxPorts.Text;
+                    
                     mySerialPort.PortName = comPort;
                     mySerialPort.Open();
 
