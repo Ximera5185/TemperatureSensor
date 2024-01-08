@@ -104,8 +104,11 @@ namespace TemperatureSensor
         }
         private void button1_Click(object sender, EventArgs e)
         {
-
             string comPort = "";
+            string key = "term";
+
+            int delay = 1000;
+            int portBaudRate = 9600;
 
             foreach (string port in SerialPort.GetPortNames())
             {
@@ -115,25 +118,23 @@ namespace TemperatureSensor
                 {
                     serialPort.Open();
 
-                    serialPort.BaudRate = 9600;
+                    serialPort.BaudRate = portBaudRate;
                 }
 
-                Thread.Sleep(1000);
+                Thread.Sleep(delay);
 
                 if (serialPort.BytesToRead > 0)
                 {
-                   // MessageBox.Show($"Слышу порт {port}");
-
                     string package = serialPort.ReadLine();
 
-                   // if (true)
+                    if (package.StartsWith(key))
                     {
-                        // mySerialPort.Open();
-
                         comPort = port;
 
-                        // showBoxPorts.Text = port;
                         serialPort.Close();
+
+                        MessageBox.Show("Ключ опознан");
+
                         break;
                     }
                 }
@@ -145,16 +146,12 @@ namespace TemperatureSensor
                 }
             }
 
-           // MessageBox.Show($"Найден порт {comPort}");
-
-            // showBoxPorts.Text = "COM5";
-
             if (buttonConnect.Text == "Подключиться")
             {
                 try
                 {
-                    // mySerialPort.PortName = showBoxPorts.Text;
                     mySerialPort.PortName = comPort;
+
                     mySerialPort.Open();
 
                     showBoxPorts.Enabled = false;
