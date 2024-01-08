@@ -19,37 +19,24 @@ namespace TemperatureSensor
             InitializeComponent();
         }
 
-        int temperature;
-
         readonly int criticalTemperature = 100;
 
-        string inputDataPort = "";
+        int temperature;
+
+        string temperatureString = "";
+        string package = "";
 
         private void MySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            temperature = Convert.ToInt32(mySerialPort.ReadLine());
+            package = mySerialPort.ReadLine();
 
-            inputDataPort = Convert.ToString(temperature);
+            temperatureString = package.Substring(4);
 
-            label1.Text = inputDataPort;
+            temperature = Convert.ToInt32(temperatureString);
+
+            label1.Text = temperatureString;
 
             ChangeColor(temperature, criticalTemperature);
-        }
-
-        private void UpdatePortListClick(object sender, EventArgs e)
-        {
-            string [] ports = SerialPort.GetPortNames();
-
-            showBoxPorts.Text = "";
-
-            showBoxPorts.Items.Clear();
-
-            if (ports.Length != 0)
-            {
-                showBoxPorts.Items.AddRange(ports);
-
-                showBoxPorts.SelectedIndex = 0;
-            }
         }
 
         private void ChangeColor(int temperature, int criticalTemperature)
@@ -68,114 +55,64 @@ namespace TemperatureSensor
             }
         }
 
-        private void ConnectButtonClick(object sender, EventArgs e)
+        private void AutoСonnectionClick(object sender, EventArgs e)
         {
-            if (buttonConnect.Text == "Подключиться")
-            {
-                try
-                {
-                    mySerialPort.PortName = showBoxPorts.Text;
-
-                    mySerialPort.Open();
-
-                    showBoxPorts.Enabled = false;
-
-                    updatePortList.Enabled = false;
-
-                    buttonConnect.Text = "Отключиться";
-                }
-                catch
-                {
-                    MessageBox.Show("Ошибка подключения");
-                }
-            }
-            else if (buttonConnect.Text == "Отключиться")
-            {
-                mySerialPort.Close();
-
-                showBoxPorts.Enabled = true;
-
-                updatePortList.Enabled = true;
-
-                label1.Text = "";
-
-                buttonConnect.Text = "Подключиться";
-            }
-        }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            string comPort = "";
             string key = "term";
 
             int delay = 1000;
             int portBaudRate = 9600;
 
-            foreach (string port in SerialPort.GetPortNames())
+            if (autoСonnection.Text == "Автоподключение")
             {
-                SerialPort serialPort = new SerialPort(port);
-
-                if (serialPort.IsOpen == false)
+                foreach (string port in SerialPort.GetPortNames())
                 {
-                    serialPort.Open();
+                    SerialPort serialPort = new SerialPort(port);
 
-                    serialPort.BaudRate = portBaudRate;
-                }
-
-                Thread.Sleep(delay);
-
-                if (serialPort.BytesToRead > 0)
-                {
-                    string package = serialPort.ReadLine();
-
-                    if (package.StartsWith(key))
+                    if (serialPort.IsOpen == false)
                     {
-                        comPort = port;
+                        serialPort.Open();
+
+                        serialPort.BaudRate = portBaudRate;
+                    }
+
+                    Thread.Sleep(delay);
+
+                    if (serialPort.BytesToRead > 0)
+                    {
+                        package = serialPort.ReadLine();
+
+                        if (package.StartsWith(key))
+                        {
+                            serialPort.Close();
+
+                            MessageBox.Show("Ключ опознан");
+
+                            mySerialPort.PortName = port;
+
+                            mySerialPort.Open();
+
+                            mySerialPort.BaudRate = portBaudRate;
+
+                            autoСonnection.Text = "Отключиться";
+
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Порт {port} молчит");
 
                         serialPort.Close();
-
-                        MessageBox.Show("Ключ опознан");
-
-                        break;
                     }
                 }
-                else
-                {
-                    Console.WriteLine($"Порт {port} молчит");
-
-                    serialPort.Close();
-                }
             }
-
-            if (buttonConnect.Text == "Подключиться")
-            {
-                try
-                {
-                    mySerialPort.PortName = comPort;
-
-                    mySerialPort.Open();
-
-                    showBoxPorts.Enabled = false;
-
-                    updatePortList.Enabled = false;
-
-                    buttonConnect.Text = "Отключиться";
-                }
-                catch
-                {
-                    MessageBox.Show("Ошибка подключения");
-                }
-            }
-            else if (buttonConnect.Text == "Отключиться")
+            else
             {
                 mySerialPort.Close();
 
-                showBoxPorts.Enabled = true;
-
-                updatePortList.Enabled = true;
-
                 label1.Text = "";
 
-                buttonConnect.Text = "Подключиться";
+                autoСonnection.Text = "Автоподключение";
             }
         }
     }
