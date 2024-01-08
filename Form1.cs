@@ -55,6 +55,17 @@ namespace TemperatureSensor
             }
         }
 
+        private void Connect(string portName, int portBaudRate) 
+        {
+            mySerialPort.PortName = portName;
+
+            mySerialPort.Open();
+
+            mySerialPort.BaudRate = portBaudRate;
+
+            autoСonnection.Text = "Отключиться";
+        }
+
         private void AutoСonnectionClick(object sender, EventArgs e)
         {
             string key = "term";
@@ -85,15 +96,7 @@ namespace TemperatureSensor
                         {
                             serialPort.Close();
 
-                            MessageBox.Show("Ключ опознан");
-
-                            mySerialPort.PortName = port;
-
-                            mySerialPort.Open();
-
-                            mySerialPort.BaudRate = portBaudRate;
-
-                            autoСonnection.Text = "Отключиться";
+                            Connect(port,portBaudRate);
 
                             break;
                         }
