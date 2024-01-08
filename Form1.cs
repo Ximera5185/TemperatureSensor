@@ -154,6 +154,7 @@ namespace TemperatureSensor
                 {
                     
                     mySerialPort.PortName = comPort;
+
                     mySerialPort.Open();
 
                     showBoxPorts.Enabled = false;
