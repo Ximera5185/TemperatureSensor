@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 using System.Threading;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace TemperatureSensor
 {
@@ -20,22 +19,25 @@ namespace TemperatureSensor
             InitializeComponent();
         }
 
-        int temperature;
-
         readonly int criticalTemperature = 100;
 
-        string inputDataPort = "";
+        int temperature;
+
+        string temperatureString = "";
+        string package = "";
 
         private void MySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            temperature = Convert.ToInt32(mySerialPort.ReadLine());
+            package = mySerialPort.ReadLine();
 
-            inputDataPort = Convert.ToString(temperature);
+            temperatureString = package.Substring(4);
 
-            label1.Text = inputDataPort;
+            temperature = Convert.ToInt32(temperatureString);
+
+            label1.Text = temperatureString;
 
             ChangeColor(temperature, criticalTemperature);
-        } 
+        }
 
         private void ChangeColor(int temperature, int criticalTemperature)
         {
@@ -52,50 +54,66 @@ namespace TemperatureSensor
                 label2.ForeColor = Color.FromArgb(58, 204, 41);
             }
         }
-       
+
         private void AutoСonnectionClick(object sender, EventArgs e)
         {
-            string comPort = "";
             string key = "term";
 
             int delay = 1000;
             int portBaudRate = 9600;
 
-            foreach (string port in SerialPort.GetPortNames())
+            if (autoСonnection.Text == "Автоподключение")
             {
-                SerialPort serialPort = new SerialPort(port);
-
-                if (serialPort.IsOpen == false)
+                foreach (string port in SerialPort.GetPortNames())
                 {
-                    serialPort.Open();
+                    SerialPort serialPort = new SerialPort(port);
 
-                    serialPort.BaudRate = portBaudRate;
-                }
-
-                Thread.Sleep(delay);
-
-                if (serialPort.BytesToRead > 0)
-                {      
-                    string package = serialPort.ReadLine();
-
-                    if (package.StartsWith(key))
+                    if (serialPort.IsOpen == false)
                     {
-                        comPort = port;
-                        
+                        serialPort.Open();
+
+                        serialPort.BaudRate = portBaudRate;
+                    }
+
+                    Thread.Sleep(delay);
+
+                    if (serialPort.BytesToRead > 0)
+                    {
+                        package = serialPort.ReadLine();
+
+                        if (package.StartsWith(key))
+                        {
+                            serialPort.Close();
+
+                            MessageBox.Show("Ключ опознан");
+
+                            mySerialPort.PortName = port;
+
+                            mySerialPort.Open();
+
+                            mySerialPort.BaudRate = portBaudRate;
+
+                            autoСonnection.Text = "Отключиться";
+
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Порт {port} молчит");
+
                         serialPort.Close();
-
-                        MessageBox.Show("Ключ опознан");
-
-                        break;
                     }
                 }
-                else
-                {
-                    Console.WriteLine($"Порт {port} молчит");
- 
-                    serialPort.Close();
-                }
-            }           
+            }
+            else
+            {
+                mySerialPort.Close();
+
+                label1.Text = "";
+
+                autoСonnection.Text = "Автоподключение";
+            }
         }
     }
 }

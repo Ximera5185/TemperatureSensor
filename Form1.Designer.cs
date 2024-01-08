@@ -32,7 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.backgroundFone = new System.ComponentModel.BackgroundWorker();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.AutoСonnection = new System.Windows.Forms.Button();
+            this.autoСonnection = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -56,7 +56,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
-            this.panel1.Controls.Add(this.AutoСonnection);
+            this.panel1.Controls.Add(this.autoСonnection);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -64,18 +64,18 @@
             this.panel1.Size = new System.Drawing.Size(147, 578);
             this.panel1.TabIndex = 5;
             // 
-            // AutoСonnection
+            // autoСonnection
             // 
-            this.AutoСonnection.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.AutoСonnection.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AutoСonnection.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.AutoСonnection.Location = new System.Drawing.Point(0, 106);
-            this.AutoСonnection.Name = "AutoСonnection";
-            this.AutoСonnection.Size = new System.Drawing.Size(147, 33);
-            this.AutoСonnection.TabIndex = 8;
-            this.AutoСonnection.Text = "Автоподключение";
-            this.AutoСonnection.UseVisualStyleBackColor = true;
-            this.AutoСonnection.Click += new System.EventHandler(this.AutoСonnectionClick);
+            this.autoСonnection.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.autoСonnection.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.autoСonnection.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.autoСonnection.Location = new System.Drawing.Point(0, 106);
+            this.autoСonnection.Name = "autoСonnection";
+            this.autoСonnection.Size = new System.Drawing.Size(147, 33);
+            this.autoСonnection.TabIndex = 8;
+            this.autoСonnection.Text = "Автоподключение";
+            this.autoСonnection.UseVisualStyleBackColor = true;
+            this.autoСonnection.Click += new System.EventHandler(this.AutoСonnectionClick);
             // 
             // panel2
             // 
@@ -146,7 +146,7 @@
         private System.IO.Ports.SerialPort mySerialPort;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button AutoСonnection;
+        private System.Windows.Forms.Button autoСonnection;
     }
 }
 
