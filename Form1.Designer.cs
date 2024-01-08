@@ -29,36 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.buttonConnect = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.backgroundFone = new System.ComponentModel.BackgroundWorker();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.updatePortList = new System.Windows.Forms.Button();
-            this.showBoxPorts = new System.Windows.Forms.ComboBox();
+            this.AutoСonnection = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.mySerialPort = new System.IO.Ports.SerialPort(this.components);
-            this.AutoСonnection = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // buttonConnect
-            // 
-            this.buttonConnect.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
-            this.buttonConnect.FlatAppearance.BorderSize = 0;
-            this.buttonConnect.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.buttonConnect.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonConnect.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonConnect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.buttonConnect.Location = new System.Drawing.Point(0, 159);
-            this.buttonConnect.Name = "buttonConnect";
-            this.buttonConnect.Size = new System.Drawing.Size(147, 33);
-            this.buttonConnect.TabIndex = 0;
-            this.buttonConnect.Text = "Подключиться";
-            this.buttonConnect.UseVisualStyleBackColor = true;
-            this.buttonConnect.Click += new System.EventHandler(this.ConnectButtonClick);
             // 
             // label1
             // 
@@ -76,9 +57,6 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
             this.panel1.Controls.Add(this.AutoСonnection);
-            this.panel1.Controls.Add(this.buttonConnect);
-            this.panel1.Controls.Add(this.updatePortList);
-            this.panel1.Controls.Add(this.showBoxPorts);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -86,37 +64,18 @@
             this.panel1.Size = new System.Drawing.Size(147, 578);
             this.panel1.TabIndex = 5;
             // 
-            // updatePortList
+            // AutoСonnection
             // 
-            this.updatePortList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
-            this.updatePortList.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
-            this.updatePortList.FlatAppearance.BorderSize = 0;
-            this.updatePortList.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.updatePortList.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.updatePortList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.updatePortList.Location = new System.Drawing.Point(0, 118);
-            this.updatePortList.Name = "updatePortList";
-            this.updatePortList.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.updatePortList.Size = new System.Drawing.Size(147, 45);
-            this.updatePortList.TabIndex = 6;
-            this.updatePortList.Text = "Обновить список доступных портов";
-            this.updatePortList.UseVisualStyleBackColor = false;
-            this.updatePortList.Click += new System.EventHandler(this.UpdatePortListClick);
-            // 
-            // showBoxPorts
-            // 
-            this.showBoxPorts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
-            this.showBoxPorts.Dock = System.Windows.Forms.DockStyle.Top;
-            this.showBoxPorts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.showBoxPorts.DropDownWidth = 100;
-            this.showBoxPorts.Font = new System.Drawing.Font("Nirmala UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.showBoxPorts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.showBoxPorts.FormatString = "N2";
-            this.showBoxPorts.FormattingEnabled = true;
-            this.showBoxPorts.Location = new System.Drawing.Point(0, 100);
-            this.showBoxPorts.Name = "showBoxPorts";
-            this.showBoxPorts.Size = new System.Drawing.Size(147, 21);
-            this.showBoxPorts.TabIndex = 7;
+            this.AutoСonnection.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.AutoСonnection.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AutoСonnection.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.AutoСonnection.Location = new System.Drawing.Point(0, 106);
+            this.AutoСonnection.Name = "AutoСonnection";
+            this.AutoСonnection.Size = new System.Drawing.Size(147, 33);
+            this.AutoСonnection.TabIndex = 8;
+            this.AutoСonnection.Text = "Автоподключение";
+            this.AutoСonnection.UseVisualStyleBackColor = true;
+            this.AutoСonnection.Click += new System.EventHandler(this.AutoСonnectionClick);
             // 
             // panel2
             // 
@@ -157,16 +116,6 @@
             // 
             this.mySerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.MySerialPort_DataReceived);
             // 
-            // AutoСonnection
-            // 
-            this.AutoСonnection.Location = new System.Drawing.Point(0, 198);
-            this.AutoСonnection.Name = "AutoСonnection";
-            this.AutoСonnection.Size = new System.Drawing.Size(141, 23);
-            this.AutoСonnection.TabIndex = 8;
-            this.AutoСonnection.Text = "Автоподключение";
-            this.AutoСonnection.UseVisualStyleBackColor = true;
-            this.AutoСonnection.Click += new System.EventHandler(this.button1_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -190,15 +139,11 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button buttonConnect;
         private System.Windows.Forms.Label label1;
         private System.ComponentModel.BackgroundWorker backgroundFone;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.IO.Ports.SerialPort mySerialPort;
-        private System.Windows.Forms.Button updatePortList;
-        private System.Windows.Forms.ComboBox showBoxPorts;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button AutoСonnection;
