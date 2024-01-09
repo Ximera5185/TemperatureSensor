@@ -19,8 +19,8 @@ namespace TemperatureSensor
             InitializeComponent();
         }
 
-        readonly int criticalTemperature = 100;
-
+        public int criticalTemperature = 100;
+       
         int temperature;
 
         string temperatureString = "";
@@ -117,6 +117,13 @@ namespace TemperatureSensor
 
                 autoСonnection.Text = "Автоподключение";
             }
+        }
+
+        private void settings_Click(object sender, EventArgs e)
+        {
+            FormSettings formSettings = new FormSettings();
+
+            formSettings.ShowDialog();
         }
     }
 }
