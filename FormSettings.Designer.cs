@@ -31,8 +31,8 @@
             this.trackBarTemperature = new System.Windows.Forms.TrackBar();
             this.labelSettingsShowTemperature = new System.Windows.Forms.Label();
             this.panelSettungs = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTemperature)).BeginInit();
             this.panelSettungs.SuspendLayout();
             this.SuspendLayout();
@@ -72,17 +72,6 @@
             this.panelSettungs.Size = new System.Drawing.Size(172, 450);
             this.panelSettungs.TabIndex = 2;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.label1.Location = new System.Drawing.Point(-3, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(140, 17);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Порог температуры";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -93,6 +82,17 @@
             this.label2.Size = new System.Drawing.Size(79, 17);
             this.label2.TabIndex = 4;
             this.label2.Text = "Настройки";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
+            this.label1.Location = new System.Drawing.Point(-3, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(140, 17);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Порог температуры";
             // 
             // FormSettings
             // 

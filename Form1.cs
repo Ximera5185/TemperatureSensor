@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
+using System.IO;
 using System.Threading;
 
 namespace TemperatureSensor
@@ -17,9 +18,20 @@ namespace TemperatureSensor
         public Form1()
         {
             InitializeComponent();
+
+            if (File.Exists("settings.txt") == false)
+            {
+                File.WriteAllText("settings.txt", criticalTemperature.ToString());
+            }
+            else 
+            {
+                string temperature = File.ReadAllText("settings.txt");
+
+                criticalTemperature = Convert.ToInt32(temperature);
+            }
         }
 
-        public int criticalTemperature = 100;
+        public int criticalTemperature = 0;
        
         int temperature;
 
@@ -28,6 +40,8 @@ namespace TemperatureSensor
 
         private void MySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
+            mySerialPort.Write(criticalTemperature.ToString());
+
             package = mySerialPort.ReadLine();
 
             temperatureString = package.Substring(4);

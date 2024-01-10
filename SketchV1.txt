@@ -5,7 +5,7 @@ int thermoCS = 3;
 int thermoCLK = 4;  //он же SCK
 int ledPin = 13; // переменная с пином подключенного светодиода
 int temperature;
-int criticalTemperature = 100;
+
 MAX6675 thermocouple(thermoCLK, thermoCS, thermoDO);
 
 int vccPin = 5;  //пин для питания
@@ -25,6 +25,7 @@ void setup() {
 }
 
 void loop() {
+int criticalTemperature;
   //Выводим показания в монитор порта
     //Serial.println((int)thermocouple.readCelsius());
     temperature = (int)thermocouple.readCelsius();
@@ -33,12 +34,19 @@ void loop() {
 
     Serial.println(package);
 
-    TurnAlarm();
+    TurnAlarm(criticalTemperature);
 
+  if (Serial.available() > 0) {
+     String inputData = "";
+      	//inputData = Serial.readString();
+        criticalTemperature = Serial.parseInt();
+
+    }
+   
  delay(1000); // Найти у Гайвера цикл таймера Gyver
 }
 
-void TurnAlarm()
+void TurnAlarm(int criticalTemperature)
 {
   if(temperature >= criticalTemperature)
   {
