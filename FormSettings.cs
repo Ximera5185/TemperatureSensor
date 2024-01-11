@@ -20,18 +20,18 @@ namespace TemperatureSensor
         {
             InitializeComponent();
 
-            trackBarTemperature.Value += form1.criticalTemperature;
+            trackBarTemperature.Value += form1.CriticalTemperature;
 
             labelSettingsShowTemperature.Text = trackBarTemperature.Value.ToString();
         }
 
         private void trackBarTemperature_Scroll(object sender, EventArgs e)
         {
-            form1.criticalTemperature = trackBarTemperature.Value;
+            form1.CriticalTemperature = trackBarTemperature.Value;
 
             labelSettingsShowTemperature.Text = trackBarTemperature.Value.ToString();
 
-            File.WriteAllText("settings.txt", form1.criticalTemperature.ToString());
+            File.WriteAllText("settings.txt", form1.CriticalTemperature.ToString());
         }
     }
 }

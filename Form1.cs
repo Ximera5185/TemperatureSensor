@@ -21,26 +21,34 @@ namespace TemperatureSensor
 
             if (File.Exists("settings.txt") == false)
             {
-                File.WriteAllText("settings.txt", criticalTemperature.ToString());
+                File.WriteAllText("settings.txt", CriticalTemperature.ToString());
             }
             else 
             {
                 string temperature = File.ReadAllText("settings.txt");
 
-                criticalTemperature = Convert.ToInt32(temperature);
+                CriticalTemperature = Convert.ToInt32(temperature);
             }
         }
 
-        public int criticalTemperature = 0;
        
+        public int CriticalTemperature { get; set; }
+
         int temperature;
 
         string temperatureString = "";
         string package = "";
-
+        bool isOpenPort = false;
         private void MySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            mySerialPort.Write(criticalTemperature.ToString());
+            string inputData = File.ReadAllText("settings.txt");
+
+            if (isOpenPort)
+            {
+                 mySerialPort.Write(inputData);
+            }
+
+            CriticalTemperature = Convert.ToInt32(inputData);
 
             package = mySerialPort.ReadLine();
 
@@ -50,7 +58,8 @@ namespace TemperatureSensor
 
             label1.Text = temperatureString;
 
-            ChangeColor(temperature, criticalTemperature);
+            ChangeColor(temperature, CriticalTemperature);
+
         }
 
         private void ChangeColor(int temperature, int criticalTemperature)
@@ -111,7 +120,7 @@ namespace TemperatureSensor
                             serialPort.Close();
 
                             Connect(port,portBaudRate);
-
+                            isOpenPort = true;
                             break;
                         }
                     }
