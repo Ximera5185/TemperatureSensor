@@ -1,12 +1,14 @@
 ﻿#include "max6675.h"
+#include <EEPROM.h>
 
 int thermoDO = 2;  //он же SO
 int thermoCS = 3;
 int thermoCLK = 4;  //он же SCK
 int ledPin = 13; // переменная с пином подключенного светодиода
 int temperature;
-int criticalTemperature;
+int criticalTemperature  ;
 int lastCritical;
+
 String inputDataTemperaturePort = "";
 
 MAX6675 thermocouple(thermoCLK, thermoCS, thermoDO);
@@ -30,6 +32,7 @@ void setup()
 
 void loop() 
   {
+    criticalTemperature = 100;
       //Выводим показания в монитор порта
         //Serial.println((int)thermocouple.readCelsius());
         temperature = (int)thermocouple.readCelsius();
@@ -37,28 +40,42 @@ void loop()
         package = key + temperature;
         
         Serial.println(package);
- if(Serial.available() > 0)
- {
-     inputDataTemperaturePort = Serial.readString();
-     criticalTemperature  = inputDataTemperaturePort.toInt();
-      lastCritical = criticalTemperature;
- }
-else
- {
-  criticalTemperature =lastCritical;
-  
- }
-        criticalTemperature = inputDataTemperaturePort.toInt();
 
-//Serial.println(criticalTemperature);
-        TurnAlarm(criticalTemperature);
+         inputDataTemperaturePort = Serial.readString();
+
+         criticalTemperature  = inputDataTemperaturePort.toInt();
+
+         if(criticalTemperature > 0)
+           {
+            EEPROM.update(0, criticalTemperature);
+           }
+          
+           
+
+         // lastCritical = criticalTemperature;
+      // if(Serial.available()  0)
+      //   {
+            
+      //   }
+      // else
+      //   {
+        //   criticalTemperature =  lastCritical;
+  
+        // }
+
+        //criticalTemperature = inputDataTemperaturePort.toInt();
+
+        //Serial.println(EEPROM.read(0));
+       // Serial.println(lastCritical);
+
+        TurnAlarm(EEPROM.read(0));
     
        delay(1000); // Найти у Гайвера цикл таймера Gyver
   }
 
 void TurnAlarm(int criticalTemperature)
 {
-  if(temperature >= criticalTemperature)
+  if(temperature > criticalTemperature)
   {
     digitalWrite(ledPin,HIGH);
   }
