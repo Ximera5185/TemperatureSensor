@@ -13,32 +13,34 @@ using System.Threading;
 
 namespace TemperatureSensor
 {
-    public partial class Form1 : Form
+    public partial class MainScreenForm1 : Form
     {
-        public Form1()
+        FormSettings formSettings = new FormSettings();
+        public MainScreenForm1()
         {
             InitializeComponent();
 
             if (File.Exists("settings.txt") == false)
             {
-                File.WriteAllText("settings.txt", CriticalTemperature.ToString());
+                File.WriteAllText("settings.txt", formSettings.GetCriticalTemperature().ToString());
             }
             else 
             {
                 string temperature = File.ReadAllText("settings.txt");
 
-                CriticalTemperature = Convert.ToInt32(temperature);
+                formSettings.SetCriticalTemperature(Convert.ToInt32(temperature)); 
             }
         }
 
        
-        public int CriticalTemperature { get; set; }
 
         int temperature;
 
         string temperatureString = "";
         string package = "";
         bool isOpenPort = false;
+       
+
         private void MySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             string inputData = File.ReadAllText("settings.txt");
@@ -48,7 +50,7 @@ namespace TemperatureSensor
                  mySerialPort.Write(inputData);
             }
 
-            CriticalTemperature = Convert.ToInt32(inputData);
+            formSettings.SetCriticalTemperature(Convert.ToInt32(inputData));
 
             package = mySerialPort.ReadLine();
 
@@ -58,7 +60,7 @@ namespace TemperatureSensor
 
             label1.Text = temperatureString;
 
-            ChangeColor(temperature, CriticalTemperature);
+            ChangeColor(temperature, formSettings.GetCriticalTemperature());
 
         }
 

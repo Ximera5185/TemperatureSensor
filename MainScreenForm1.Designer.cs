@@ -1,6 +1,6 @@
 ﻿namespace TemperatureSensor
 {
-    partial class Form1
+    partial class MainScreenForm1
     {
         /// <summary>
         /// Обязательная переменная конструктора.

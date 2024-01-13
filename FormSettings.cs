@@ -14,24 +14,36 @@ namespace TemperatureSensor
 {
     public partial class FormSettings : Form
     {
-        Form1 form1 = new Form1();
+      
 
+        private int CriticalTemperature { get; set; }
         public FormSettings()
         {
             InitializeComponent();
 
-            trackBarTemperature.Value += form1.CriticalTemperature;
+            TrackBarTemperature.Value += GetCriticalTemperature();
 
-            labelSettingsShowTemperature.Text = trackBarTemperature.Value.ToString();
+            labelSettingsShowTemperature.Text = TrackBarTemperature.Value.ToString();
         }
 
-        private void trackBarTemperature_Scroll(object sender, EventArgs e)
+
+        public int GetCriticalTemperature()
         {
-            form1.CriticalTemperature = trackBarTemperature.Value;
+            return CriticalTemperature;
+        }
 
-            labelSettingsShowTemperature.Text = trackBarTemperature.Value.ToString();
+        public void SetCriticalTemperature(int criticalTemperature)
+        {
+            CriticalTemperature = criticalTemperature;
+        }
 
-            File.WriteAllText("settings.txt", form1.CriticalTemperature.ToString());
+        private void TrackBarTemperature_Scroll(object sender, EventArgs e)
+        {
+            SetCriticalTemperature(TrackBarTemperature.Value);
+
+            labelSettingsShowTemperature.Text = TrackBarTemperature.Value.ToString();
+
+            File.WriteAllText("settings.txt", GetCriticalTemperature().ToString());
         }
     }
 }

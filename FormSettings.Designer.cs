@@ -28,25 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.trackBarTemperature = new System.Windows.Forms.TrackBar();
+            this.TrackBarTemperature = new System.Windows.Forms.TrackBar();
             this.labelSettingsShowTemperature = new System.Windows.Forms.Label();
             this.panelSettungs = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarTemperature)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TrackBarTemperature)).BeginInit();
             this.panelSettungs.SuspendLayout();
             this.SuspendLayout();
             // 
-            // trackBarTemperature
+            // TrackBarTemperature
             // 
-            this.trackBarTemperature.Location = new System.Drawing.Point(178, 12);
-            this.trackBarTemperature.Maximum = 1000;
-            this.trackBarTemperature.Name = "trackBarTemperature";
-            this.trackBarTemperature.Size = new System.Drawing.Size(620, 45);
-            this.trackBarTemperature.TabIndex = 0;
-            this.trackBarTemperature.TickFrequency = 10;
-            this.trackBarTemperature.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackBarTemperature.Scroll += new System.EventHandler(this.trackBarTemperature_Scroll);
+            this.TrackBarTemperature.Location = new System.Drawing.Point(178, 12);
+            this.TrackBarTemperature.Maximum = 1000;
+            this.TrackBarTemperature.Name = "TrackBarTemperature";
+            this.TrackBarTemperature.Size = new System.Drawing.Size(620, 45);
+            this.TrackBarTemperature.TabIndex = 0;
+            this.TrackBarTemperature.TickFrequency = 10;
+            this.TrackBarTemperature.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.TrackBarTemperature.Scroll += new System.EventHandler(this.TrackBarTemperature_Scroll);
             // 
             // labelSettingsShowTemperature
             // 
@@ -101,11 +101,11 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.panelSettungs);
-            this.Controls.Add(this.trackBarTemperature);
+            this.Controls.Add(this.TrackBarTemperature);
             this.Name = "FormSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormSettings";
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarTemperature)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TrackBarTemperature)).EndInit();
             this.panelSettungs.ResumeLayout(false);
             this.panelSettungs.PerformLayout();
             this.ResumeLayout(false);
@@ -115,7 +115,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TrackBar trackBarTemperature;
+        private System.Windows.Forms.TrackBar TrackBarTemperature;
         private System.Windows.Forms.Label labelSettingsShowTemperature;
         private System.Windows.Forms.Panel panelSettungs;
         private System.Windows.Forms.Label label1;
