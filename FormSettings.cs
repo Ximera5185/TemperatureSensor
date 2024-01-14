@@ -27,7 +27,7 @@ namespace TemperatureSensor
 
         private void trackBarTemperature_Scroll(object sender, EventArgs e)
         {
-            form1.CriticalTemperature = trackBarTemperature.Value;
+            form1.SetCriticalTemperature(trackBarTemperature.Value);
 
             labelSettingsShowTemperature.Text = trackBarTemperature.Value.ToString();
 

@@ -1,64 +1,73 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO.Ports;
 using System.IO;
+using System.IO.Ports;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace TemperatureSensor
 {
     public partial class Form1 : Form
     {
+        private int _temperature;
+
+        private string _temperatureString = "";
+        private string _package = "";
+        private string _fileName = "settings.txt";
+
+        private bool isOpenPort = false;
+
         public Form1()
         {
             InitializeComponent();
 
-            if (File.Exists("settings.txt") == false)
+            SetSavedCriticalTemperature();
+        }
+
+        public int CriticalTemperature { get; private set; }
+
+        public void SetCriticalTemperature(int temperature) 
+        {
+            CriticalTemperature = temperature;
+        }
+        private void SetSavedCriticalTemperature()
+        {
+            if (File.Exists(_fileName) == false)
             {
-                File.WriteAllText("settings.txt", CriticalTemperature.ToString());
+                File.WriteAllText(_fileName, CriticalTemperature.ToString());
             }
-            else 
+            else
             {
-                string temperature = File.ReadAllText("settings.txt");
+                string temperature = File.ReadAllText(_fileName);
 
                 CriticalTemperature = Convert.ToInt32(temperature);
             }
         }
 
-       
-        public int CriticalTemperature { get; set; }
-
-        int temperature;
-
-        string temperatureString = "";
-        string package = "";
-        bool isOpenPort = false;
         private void MySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            string inputData = File.ReadAllText("settings.txt");
+            string inputData = File.ReadAllText(_fileName);
 
             if (isOpenPort)
             {
-                 mySerialPort.Write(inputData);
+                mySerialPort.Write(inputData);
             }
 
-            CriticalTemperature = Convert.ToInt32(inputData);
+           // CriticalTemperature = Convert.ToInt32(inputData);
 
-            package = mySerialPort.ReadLine();
+            int.TryParse(inputData, out int numbers);
 
-            temperatureString = package.Substring(4);
+            CriticalTemperature = numbers;
 
-            temperature = Convert.ToInt32(temperatureString);
+            _package = mySerialPort.ReadLine();
 
-            label1.Text = temperatureString;
+            _temperatureString = _package.Substring(4);
 
-            ChangeColor(temperature, CriticalTemperature);
+            _temperature = Convert.ToInt32(_temperatureString);
+
+            label1.Text = _temperatureString;
+
+            ChangeColor(_temperature, CriticalTemperature);
 
         }
 
@@ -78,7 +87,7 @@ namespace TemperatureSensor
             }
         }
 
-        private void Connect(string portName, int portBaudRate) 
+        private void Connect(string portName, int portBaudRate)
         {
             mySerialPort.PortName = portName;
 
@@ -91,12 +100,13 @@ namespace TemperatureSensor
 
         private void AutoСonnectionClick(object sender, EventArgs e)
         {
+            string nameOfButton = "Автоподключение";
             string key = "term";
 
             int delay = 1000;
             int portBaudRate = 9600;
 
-            if (autoСonnection.Text == "Автоподключение")
+            if (autoСonnection.Text == nameOfButton)
             {
                 foreach (string port in SerialPort.GetPortNames())
                 {
@@ -113,14 +123,16 @@ namespace TemperatureSensor
 
                     if (serialPort.BytesToRead > 0)
                     {
-                        package = serialPort.ReadLine();
+                        _package = serialPort.ReadLine();
 
-                        if (package.StartsWith(key))
+                        if (_package.StartsWith(key))
                         {
                             serialPort.Close();
 
-                            Connect(port,portBaudRate);
+                            Connect(port, portBaudRate);
+
                             isOpenPort = true;
+
                             break;
                         }
                     }
@@ -138,7 +150,7 @@ namespace TemperatureSensor
 
                 label1.Text = "";
 
-                autoСonnection.Text = "Автоподключение";
+                autoСonnection.Text = nameOfButton;
             }
         }
 
