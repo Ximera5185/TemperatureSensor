@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureSensor", "TemperatureSensor.csproj", "{25F4A91A-D6CB-4B5A-B9F9-8895E9ECE93A}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Temperature", "..\Temperature\Temperature.vdproj", "{E4DFB3D3-5321-469A-A8B5-F3F4AACA5471}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{25F4A91A-D6CB-4B5A-B9F9-8895E9ECE93A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25F4A91A-D6CB-4B5A-B9F9-8895E9ECE93A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25F4A91A-D6CB-4B5A-B9F9-8895E9ECE93A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4DFB3D3-5321-469A-A8B5-F3F4AACA5471}.Debug|Any CPU.ActiveCfg = Debug
+		{E4DFB3D3-5321-469A-A8B5-F3F4AACA5471}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
