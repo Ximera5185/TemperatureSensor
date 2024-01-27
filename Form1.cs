@@ -150,6 +150,8 @@ namespace TemperatureSensor
 
             mySerialPort.BaudRate = portBaudRate;
 
+            autoСonnection.Enabled = true;
+
             autoСonnection.Text = "Отключиться";
         }
 
@@ -158,14 +160,19 @@ namespace TemperatureSensor
             string nameOfButton = "Автоподключение";
             string key = "term";
 
-            int delay = 1000;
+            int delay = 1100;
             int portBaudRate = 9600;
-
-        
 
                 if (autoСonnection.Text == nameOfButton)
                 {
-                    // Connect(portName, portBaudRate);
+                    autoСonnection.Enabled = false;
+
+                // Connect(portName, portBaudRate);
+               /* while (неподключилась ардуино)
+                {
+                   приходится перезагружать программу если устройство было отключина в момент работы программы  
+                   также нужно добавить услови что произойдет если устройство отключено 
+                }*/
                     foreach (string port in SerialPort.GetPortNames())
                     {
                         SerialPort serialPort = new SerialPort(port);
@@ -196,8 +203,6 @@ namespace TemperatureSensor
                         }
                         else
                         {
-                            Console.WriteLine($"Порт {port} молчит");
-
                             serialPort.Close();
                         }
                     }
