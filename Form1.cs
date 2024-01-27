@@ -17,11 +17,15 @@ namespace TemperatureSensor
 
         private bool isOpenPort = false;
 
+        string portName = "";
+        int portBaudRate = 9600;
         public Form1()
         {
             InitializeComponent();
 
             SetSavedCriticalTemperature();
+
+            ScanAutomaticPort(ref portName);
         }
 
         public int CriticalTemperature { get; private set; }
@@ -86,7 +90,52 @@ namespace TemperatureSensor
                 label2.ForeColor = Color.FromArgb(58, 204, 41);
             }
         }
+        private void ScanAutomaticPort( ref string portName) 
+        {
+            
+            string key = "term";
 
+            int delay = 1000;
+            int portBaudRate = 9600;
+
+            foreach (string port in SerialPort.GetPortNames())
+            {
+                SerialPort serialPort = new SerialPort(port);
+
+                if (serialPort.IsOpen == false)
+                {
+                    serialPort.Open();
+
+                    serialPort.BaudRate = portBaudRate;
+                }
+
+                Thread.Sleep(delay);
+
+                if (serialPort.BytesToRead > 0) // тут косяк
+                {
+                    _package = serialPort.ReadLine();
+
+                    if (_package.StartsWith(key))
+                    {
+                        serialPort.Close();
+
+                        //Connect(port, portBaudRate);
+
+                        isOpenPort = true;
+
+                        portName = port;
+
+                        break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Порт {port} молчит");
+
+                    serialPort.Close();
+                }
+            }
+        } 
         private void Connect(string portName, int portBaudRate)
         {
             mySerialPort.PortName = portName;
@@ -103,46 +152,47 @@ namespace TemperatureSensor
             string nameOfButton = "Автоподключение";
             string key = "term";
 
-            int delay = 1000;
-            int portBaudRate = 9600;
+           /* int delay = 1000;
+            int portBaudRate = 9600;*/
 
             if (autoСonnection.Text == nameOfButton)
             {
-                foreach (string port in SerialPort.GetPortNames())
-                {
-                    SerialPort serialPort = new SerialPort(port);
+                Connect(portName, portBaudRate);
+                /* foreach (string port in SerialPort.GetPortNames())
+                 {
+                     SerialPort serialPort = new SerialPort(port);
 
-                    if (serialPort.IsOpen == false)
-                    {
-                        serialPort.Open();
+                     if (serialPort.IsOpen == false)
+                     {
+                         serialPort.Open();
 
-                        serialPort.BaudRate = portBaudRate;
-                    }
+                         serialPort.BaudRate = portBaudRate;
+                     }
 
-                    Thread.Sleep(delay);
+                     Thread.Sleep(delay);
 
-                    if (serialPort.BytesToRead > 0)
-                    {
-                        _package = serialPort.ReadLine();
+                     if (serialPort.BytesToRead > 0) // тут косяк
+                     {
+                         _package = serialPort.ReadLine();
 
-                        if (_package.StartsWith(key))
-                        {
-                            serialPort.Close();
+                         if (_package.StartsWith(key))
+                         {
+                             serialPort.Close();
 
-                            Connect(port, portBaudRate);
+                             Connect(port, portBaudRate);
 
-                            isOpenPort = true;
+                             isOpenPort = true;
 
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Порт {port} молчит");
+                             break;
+                         }
+                     }
+                     else
+                     {
+                         Console.WriteLine($"Порт {port} молчит");
 
-                        serialPort.Close();
-                    }
-                }
+                         serialPort.Close();
+                     }
+                 }*/
             }
             else
             {
