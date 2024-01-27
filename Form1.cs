@@ -12,25 +12,27 @@ namespace TemperatureSensor
         private int _temperature;
 
         private string _temperatureString = "";
-        private string _package = "";
+        // private string _package = "";
         private string _fileName = "settings.txt";
 
-        private bool isOpenPort = false;
+        public static bool isOpenPort = false;
 
-        string portName = "";
+        public static string portName = "";
         int portBaudRate = 9600;
+
+        public static string Package { set; get; }
         public Form1()
         {
             InitializeComponent();
 
             SetSavedCriticalTemperature();
 
-           // ScanAutomaticPort(ref portName);
+            // ScanAutomaticPort(ref portName);
         }
 
         public int CriticalTemperature { get; private set; }
 
-        public void SetCriticalTemperature(int temperature) 
+        public void SetCriticalTemperature(int temperature)
         {
             CriticalTemperature = temperature;
         }
@@ -57,24 +59,25 @@ namespace TemperatureSensor
                 mySerialPort.Write(inputData);
             }
 
-           // CriticalTemperature = Convert.ToInt32(inputData);
+            // CriticalTemperature = Convert.ToInt32(inputData);
 
             int.TryParse(inputData, out int numbers);
 
             CriticalTemperature = numbers;
 
-            _package = mySerialPort.ReadLine();
+            Package = mySerialPort.ReadLine();
 
-            _temperatureString = _package.Substring(4);
+            _temperatureString = Package.Substring(4);
 
             _temperature = Convert.ToInt32(_temperatureString);
-
-            label1.Text = _temperatureString;
-
+         
+                label1.Text = _temperatureString;
+        
             ChangeColor(_temperature, CriticalTemperature);
-
+          
         }
-
+     
+        
         private void ChangeColor(int temperature, int criticalTemperature)
         {
             if (temperature >= criticalTemperature)
@@ -90,59 +93,59 @@ namespace TemperatureSensor
                 label2.ForeColor = Color.FromArgb(58, 204, 41);
             }
         }
-       /* private void ScanAutomaticPort( ref string portName) 
-        {   
-            string key = "term";
+        /* private void ScanAutomaticPort( ref string portName) 
+         {   
+             string key = "term";
 
-            int delay = 2000;
-            int portBaudRate = 9600;
+             int delay = 2000;
+             int portBaudRate = 9600;
 
-            MessageBox.Show("Начинаем скан портов");
+             MessageBox.Show("Начинаем скан портов");
 
-            foreach (string port in SerialPort.GetPortNames())
-            {
-                SerialPort serialPort = new SerialPort(port);
+             foreach (string port in SerialPort.GetPortNames())
+             {
+                 SerialPort serialPort = new SerialPort(port);
 
-                if (serialPort.IsOpen == false)
-                {
-                    serialPort.Open();
+                 if (serialPort.IsOpen == false)
+                 {
+                     serialPort.Open();
 
-                    MessageBox.Show($" {port} открыт {serialPort.IsOpen}");
-                    serialPort.BaudRate = portBaudRate;
-                }
+                     MessageBox.Show($" {port} открыт {serialPort.IsOpen}");
+                     serialPort.BaudRate = portBaudRate;
+                 }
 
-                Thread.Sleep(delay);
+                 Thread.Sleep(delay);
 
-                MessageBox.Show($"Слушаем порт {port}");
+                 MessageBox.Show($"Слушаем порт {port}");
 
-                if (serialPort.BytesToRead > 0) // тут косяк
-                {
-                    _package = serialPort.ReadLine();
+                 if (serialPort.BytesToRead > 0) // тут косяк
+                 {
+                     _package = serialPort.ReadLine();
 
-                    if (_package.StartsWith(key))
-                    {
-                        serialPort.Close();
+                     if (_package.StartsWith(key))
+                     {
+                         serialPort.Close();
 
-                        MessageBox.Show($"Нашли наш порт {port}");
+                         MessageBox.Show($"Нашли наш порт {port}");
 
-                        Connect(port, portBaudRate);
+                         Connect(port, portBaudRate);
 
-                        isOpenPort = true;
+                         isOpenPort = true;
 
-                        portName = port;
+                         portName = port;
 
-                        break;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show($"Порт {port} молчит");
+                         break;
+                     }
+                 }
+                 else
+                 {
+                     MessageBox.Show($"Порт {port} молчит");
 
-                    serialPort.Close();
-                }
-            }
-        } */
-        private void Connect(string portName, int portBaudRate)
+                     serialPort.Close();
+                 }
+             }
+         } */
+        public void Connect(string portName, int portBaudRate)
         {
             mySerialPort.PortName = portName;
 
@@ -157,65 +160,22 @@ namespace TemperatureSensor
 
         private void AutoСonnectionClick(object sender, EventArgs e)
         {
+
             string nameOfButton = "Автоподключение";
-            string key = "term";
 
-            int delay = 1100;
-            int portBaudRate = 9600;
 
-                if (autoСonnection.Text == nameOfButton)
-                {
-                    autoСonnection.Enabled = false;
+            if (autoСonnection.Text == nameOfButton)
+            {
+                Connect(portName, portBaudRate);
+            }
+            else if (autoСonnection.Text == "Отключиться")
+            {
+                mySerialPort.Close();
 
-                // Connect(portName, portBaudRate);
-               /* while (неподключилась ардуино)
-                {
-                   приходится перезагружать программу если устройство было отключина в момент работы программы  
-                   также нужно добавить услови что произойдет если устройство отключено 
-                }*/
-                    foreach (string port in SerialPort.GetPortNames())
-                    {
-                        SerialPort serialPort = new SerialPort(port);
+                label1.Text = "";
 
-                        if (serialPort.IsOpen == false)
-                        {
-                            serialPort.Open();
-
-                            serialPort.BaudRate = portBaudRate;
-                        }
-
-                        Thread.Sleep(delay);
-
-                        if (serialPort.BytesToRead > 0) // тут косяк если в ардуино стоит задержка то возможно что на порту в момент чтения не чего не будет
-                        {
-                            _package = serialPort.ReadLine();
-
-                            if (_package.StartsWith(key))
-                            {
-                                serialPort.Close();
-
-                                Connect(port, portBaudRate);
-
-                                isOpenPort = true;
-
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            serialPort.Close();
-                        }
-                    }
-                }
-                else
-                {
-                    mySerialPort.Close();
-
-                    label1.Text = "";
-
-                    autoСonnection.Text = nameOfButton;
-                }
-            
+                autoСonnection.Text = "Автоподключение";
+            }
         }
 
         private void settings_Click(object sender, EventArgs e)
