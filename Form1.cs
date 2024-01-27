@@ -25,7 +25,7 @@ namespace TemperatureSensor
 
             SetSavedCriticalTemperature();
 
-            ScanAutomaticPort(ref portName);
+           // ScanAutomaticPort(ref portName);
         }
 
         public int CriticalTemperature { get; private set; }
@@ -90,13 +90,14 @@ namespace TemperatureSensor
                 label2.ForeColor = Color.FromArgb(58, 204, 41);
             }
         }
-        private void ScanAutomaticPort( ref string portName) 
-        {
-            
+       /* private void ScanAutomaticPort( ref string portName) 
+        {   
             string key = "term";
 
-            int delay = 1000;
+            int delay = 2000;
             int portBaudRate = 9600;
+
+            MessageBox.Show("Начинаем скан портов");
 
             foreach (string port in SerialPort.GetPortNames())
             {
@@ -106,10 +107,13 @@ namespace TemperatureSensor
                 {
                     serialPort.Open();
 
+                    MessageBox.Show($" {port} открыт {serialPort.IsOpen}");
                     serialPort.BaudRate = portBaudRate;
                 }
 
                 Thread.Sleep(delay);
+
+                MessageBox.Show($"Слушаем порт {port}");
 
                 if (serialPort.BytesToRead > 0) // тут косяк
                 {
@@ -119,7 +123,9 @@ namespace TemperatureSensor
                     {
                         serialPort.Close();
 
-                        //Connect(port, portBaudRate);
+                        MessageBox.Show($"Нашли наш порт {port}");
+
+                        Connect(port, portBaudRate);
 
                         isOpenPort = true;
 
@@ -130,12 +136,12 @@ namespace TemperatureSensor
                 }
                 else
                 {
-                    Console.WriteLine($"Порт {port} молчит");
+                    MessageBox.Show($"Порт {port} молчит");
 
                     serialPort.Close();
                 }
             }
-        } 
+        } */
         private void Connect(string portName, int portBaudRate)
         {
             mySerialPort.PortName = portName;
@@ -152,56 +158,59 @@ namespace TemperatureSensor
             string nameOfButton = "Автоподключение";
             string key = "term";
 
-           /* int delay = 1000;
-            int portBaudRate = 9600;*/
+            int delay = 1000;
+            int portBaudRate = 9600;
 
-            if (autoСonnection.Text == nameOfButton)
-            {
-                Connect(portName, portBaudRate);
-                /* foreach (string port in SerialPort.GetPortNames())
-                 {
-                     SerialPort serialPort = new SerialPort(port);
+        
 
-                     if (serialPort.IsOpen == false)
-                     {
-                         serialPort.Open();
+                if (autoСonnection.Text == nameOfButton)
+                {
+                    // Connect(portName, portBaudRate);
+                    foreach (string port in SerialPort.GetPortNames())
+                    {
+                        SerialPort serialPort = new SerialPort(port);
 
-                         serialPort.BaudRate = portBaudRate;
-                     }
+                        if (serialPort.IsOpen == false)
+                        {
+                            serialPort.Open();
 
-                     Thread.Sleep(delay);
+                            serialPort.BaudRate = portBaudRate;
+                        }
 
-                     if (serialPort.BytesToRead > 0) // тут косяк
-                     {
-                         _package = serialPort.ReadLine();
+                        Thread.Sleep(delay);
 
-                         if (_package.StartsWith(key))
-                         {
-                             serialPort.Close();
+                        if (serialPort.BytesToRead > 0) // тут косяк если в ардуино стоит задержка то возможно что на порту в момент чтения не чего не будет
+                        {
+                            _package = serialPort.ReadLine();
 
-                             Connect(port, portBaudRate);
+                            if (_package.StartsWith(key))
+                            {
+                                serialPort.Close();
 
-                             isOpenPort = true;
+                                Connect(port, portBaudRate);
 
-                             break;
-                         }
-                     }
-                     else
-                     {
-                         Console.WriteLine($"Порт {port} молчит");
+                                isOpenPort = true;
 
-                         serialPort.Close();
-                     }
-                 }*/
-            }
-            else
-            {
-                mySerialPort.Close();
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Порт {port} молчит");
 
-                label1.Text = "";
+                            serialPort.Close();
+                        }
+                    }
+                }
+                else
+                {
+                    mySerialPort.Close();
 
-                autoСonnection.Text = nameOfButton;
-            }
+                    label1.Text = "";
+
+                    autoСonnection.Text = nameOfButton;
+                }
+            
         }
 
         private void settings_Click(object sender, EventArgs e)
