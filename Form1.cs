@@ -9,6 +9,7 @@ namespace TemperatureSensor
 {
     public partial class Form1 : Form
     {
+        SerialPortState serialPortState = new SerialPortState();
         private int _temperature;
 
         private string _temperatureString = "";
@@ -54,28 +55,35 @@ namespace TemperatureSensor
         {
             string inputData = File.ReadAllText(_fileName);
 
-            if (isOpenPort)
+            
+                if (isOpenPort)
+                {
+                    mySerialPort.Write(inputData);
+                }
+
+
+                int.TryParse(inputData, out int numbers);
+
+                CriticalTemperature = numbers;
+
+                Package = mySerialPort.ReadLine();
+
+                _temperatureString = Package.Substring(4);
+
+                _temperature = Convert.ToInt32(_temperatureString);
+
+            if (mySerialPort.BreakState == false)
             {
-                mySerialPort.Write(inputData);
-            }
-
-            // CriticalTemperature = Convert.ToInt32(inputData);
-
-            int.TryParse(inputData, out int numbers);
-
-            CriticalTemperature = numbers;
-
-            Package = mySerialPort.ReadLine();
-
-            _temperatureString = Package.Substring(4);
-
-            _temperature = Convert.ToInt32(_temperatureString);
-         
                 label1.Text = _temperatureString;
+            }
+            else 
+            {
+                label1.Text = "Разрыв соединения";
+            }
         
-            ChangeColor(_temperature, CriticalTemperature);
-          
+                ChangeColor(_temperature, CriticalTemperature);
         }
+        
      
         
         private void ChangeColor(int temperature, int criticalTemperature)

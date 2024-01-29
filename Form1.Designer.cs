@@ -1,4 +1,6 @@
-﻿namespace TemperatureSensor
+﻿using System.Windows.Forms;
+
+namespace TemperatureSensor
 {
     partial class Form1
     {
@@ -132,7 +134,7 @@
             // 
             // mySerialPort
             // 
-            this.mySerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.MySerialPort_DataReceived);
+                this.mySerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.MySerialPort_DataReceived);
             // 
             // fileSystemWatcher1
             // 

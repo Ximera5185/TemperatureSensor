@@ -11,20 +11,19 @@ namespace TemperatureSensor
 {
     internal class Connect
     {
-        public Connect() 
+        public Connect()
         {
             ScanAutomaticPort(ref Form1.portName);
         }
-        
+
         private void ScanAutomaticPort(ref string portName)
         {
-           
             string key = "term";
 
-            int delay = 2000;
             int portBaudRate = 9600;
+            int dataBytes = 0;
 
-            MessageBox.Show("Начинаем скан портов");
+            //MessageBox.Show("Начинаем скан портов");
 
             foreach (string port in SerialPort.GetPortNames())
             {
@@ -34,15 +33,23 @@ namespace TemperatureSensor
                 {
                     serialPort.Open();
 
-                    MessageBox.Show($" {port} открыт {serialPort.IsOpen}");
+                    // MessageBox.Show($" {port} открыт {serialPort.IsOpen}");
+
                     serialPort.BaudRate = portBaudRate;
                 }
 
-                Thread.Sleep(delay);
+                // MessageBox.Show($"Слушаем порт {port}");
 
-                MessageBox.Show($"Слушаем порт {port}");
+                DateTime startTime = DateTime.Now;
 
-                if (serialPort.BytesToRead > 0) // тут косяк
+                TimeSpan duration = TimeSpan.FromSeconds(2);
+
+                while ((DateTime.Now - startTime) < duration) // Слушаем порт 2 сикунды
+                {
+                    dataBytes = serialPort.BytesToRead;
+                }
+
+                if (dataBytes > 0)
                 {
                     Form1.Package = serialPort.ReadLine();
 
@@ -50,9 +57,9 @@ namespace TemperatureSensor
                     {
                         serialPort.Close();
 
-                        MessageBox.Show($"Нашли наш порт {port}");
+                        // MessageBox.Show($"Нашли наш порт {port}");
 
-                       // Connect(port, portBaudRate);
+                        // Connect(port, portBaudRate);
 
                         Form1.isOpenPort = true;
 
@@ -63,10 +70,12 @@ namespace TemperatureSensor
                 }
                 else
                 {
-                    MessageBox.Show($"Порт {port} молчит");
+                    // MessageBox.Show($"Порт {port} молчит");
 
                     serialPort.Close();
                 }
+
+                System.Threading.Thread.Sleep(100); // Добавить небольшую задержку перед следующей проверкой
             }
         }
     }
