@@ -13,12 +13,13 @@ namespace TemperatureSensor
         private int _temperature;
 
         private string _temperatureString = "";
-        // private string _package = "";
+
         private string _fileName = "settings.txt";
 
         public static bool isOpenPort = false;
 
         public static string portName = "";
+
         int portBaudRate = 9600;
 
         public static string Package { set; get; }
@@ -29,10 +30,24 @@ namespace TemperatureSensor
             SetSavedCriticalTemperature();
 
             // ScanAutomaticPort(ref portName);
+          //  Method();
         }
 
         public int CriticalTemperature { get; private set; }
 
+        public void Method() 
+        {
+            while (true)
+            {
+                Thread.Sleep(2000);
+
+                if (mySerialPort.BytesToRead < 0)
+                {
+
+                    MessageBox.Show("Обрыв линии");
+                }
+            }
+        }
         public void SetCriticalTemperature(int temperature)
         {
             CriticalTemperature = temperature;
@@ -55,37 +70,38 @@ namespace TemperatureSensor
         {
             string inputData = File.ReadAllText(_fileName);
 
-            
-                if (isOpenPort)
-                {
-                    mySerialPort.Write(inputData);
-                }
 
 
-                int.TryParse(inputData, out int numbers);
+            if (isOpenPort)
+            {
+                mySerialPort.Write(inputData);
+            }
 
-                CriticalTemperature = numbers;
 
-                Package = mySerialPort.ReadLine();
+            int.TryParse(inputData, out int numbers);
 
-                _temperatureString = Package.Substring(4);
+            CriticalTemperature = numbers;
 
-                _temperature = Convert.ToInt32(_temperatureString);
+            Package = mySerialPort.ReadLine();
+
+            _temperatureString = Package.Substring(4);
+
+            _temperature = Convert.ToInt32(_temperatureString);
 
             if (mySerialPort.BreakState == false)
             {
                 label1.Text = _temperatureString;
             }
-            else 
+            else
             {
                 label1.Text = "Разрыв соединения";
             }
-        
-                ChangeColor(_temperature, CriticalTemperature);
+
+            ChangeColor(_temperature, CriticalTemperature);
         }
-        
-     
-        
+
+
+
         private void ChangeColor(int temperature, int criticalTemperature)
         {
             if (temperature >= criticalTemperature)

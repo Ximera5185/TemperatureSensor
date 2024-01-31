@@ -134,7 +134,7 @@ namespace TemperatureSensor
             // 
             // mySerialPort
             // 
-                this.mySerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.MySerialPort_DataReceived);
+            this.mySerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.MySerialPort_DataReceived);
             // 
             // fileSystemWatcher1
             // 
