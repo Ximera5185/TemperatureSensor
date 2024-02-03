@@ -3,13 +3,15 @@ using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TemperatureSensor
 {
     public partial class Form1 : Form
     {
-        SerialPortState serialPortState = new SerialPortState();
+        Connect connect;
+
         private int _temperature;
 
         private string _temperatureString = "";
@@ -22,6 +24,7 @@ namespace TemperatureSensor
 
         int portBaudRate = 9600;
 
+
         public static string Package { set; get; }
         public Form1()
         {
@@ -29,25 +32,31 @@ namespace TemperatureSensor
 
             SetSavedCriticalTemperature();
 
-            // ScanAutomaticPort(ref portName);
-          //  Method();
+
+            СheckСonnectionAsync();
         }
 
-        public int CriticalTemperature { get; private set; }
-
-        public void Method() 
+        private async Task СheckСonnectionAsync() 
+        {
+           await Task.Run(() => СheckСonnection());
+        }
+        private void СheckСonnection() 
         {
             while (true)
             {
-                Thread.Sleep(2000);
-
-                if (mySerialPort.BytesToRead < 0)
+                if (mySerialPort.IsOpen == false)
                 {
+                    label1.Text = "гон";
 
-                    MessageBox.Show("Обрыв линии");
+                    Connect connect = new Connect();
+
+                    Connect(portName,portBaudRate);
                 }
             }
         }
+        public int CriticalTemperature { get; private set; }
+
+        
         public void SetCriticalTemperature(int temperature)
         {
             CriticalTemperature = temperature;
@@ -66,10 +75,10 @@ namespace TemperatureSensor
             }
         }
 
+
         private void MySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             string inputData = File.ReadAllText(_fileName);
-
 
 
             if (isOpenPort)
@@ -87,17 +96,21 @@ namespace TemperatureSensor
             _temperatureString = Package.Substring(4);
 
             _temperature = Convert.ToInt32(_temperatureString);
-
-            if (mySerialPort.BreakState == false)
-            {
-                label1.Text = _temperatureString;
-            }
-            else
-            {
-                label1.Text = "Разрыв соединения";
-            }
+    
+          
+               
+                     label1.Invoke((MethodInvoker) delegate
+                     {
+                         label1.Text = _temperatureString;
+                     }
+                     );
+          
+           
+            
 
             ChangeColor(_temperature, CriticalTemperature);
+
+
         }
 
 
@@ -177,12 +190,12 @@ namespace TemperatureSensor
 
             mySerialPort.BaudRate = portBaudRate;
 
-            autoСonnection.Enabled = true;
+           /* autoСonnection.Enabled = true;
 
-            autoСonnection.Text = "Отключиться";
+            autoСonnection.Text = "Отключиться";*/
         }
 
-        private void AutoСonnectionClick(object sender, EventArgs e)
+      /*  private void AutoСonnectionClick(object sender, EventArgs e)
         {
 
             string nameOfButton = "Автоподключение";
@@ -200,7 +213,7 @@ namespace TemperatureSensor
 
                 autoСonnection.Text = "Автоподключение";
             }
-        }
+        }*/
 
         private void settings_Click(object sender, EventArgs e)
         {
@@ -208,5 +221,6 @@ namespace TemperatureSensor
 
             formSettings.ShowDialog();
         }
+
     }
 }

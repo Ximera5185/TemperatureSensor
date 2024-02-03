@@ -42,7 +42,7 @@ namespace TemperatureSensor
 
                 DateTime startTime = DateTime.Now;
 
-                TimeSpan duration = TimeSpan.FromSeconds(2);
+                TimeSpan duration = TimeSpan.FromSeconds(3);
 
                 while ((DateTime.Now - startTime) < duration) // Слушаем порт 2 сикунды
                 {

@@ -17,8 +17,9 @@ namespace TemperatureSensor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Connect connect = new Connect();
+            
             Application.Run(new Form1());
+
         }
     }
 }

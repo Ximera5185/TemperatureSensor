@@ -35,7 +35,6 @@ namespace TemperatureSensor
             this.backgroundFone = new System.ComponentModel.BackgroundWorker();
             this.panel1 = new System.Windows.Forms.Panel();
             this.settings = new System.Windows.Forms.Button();
-            this.autoСonnection = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -55,14 +54,14 @@ namespace TemperatureSensor
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(204)))), ((int)(((byte)(41)))));
             this.label1.Location = new System.Drawing.Point(76, 32);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 50);
+            this.label1.Size = new System.Drawing.Size(90, 50);
             this.label1.TabIndex = 3;
+            this.label1.Text = "нет";
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
             this.panel1.Controls.Add(this.settings);
-            this.panel1.Controls.Add(this.autoСonnection);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -83,19 +82,6 @@ namespace TemperatureSensor
             this.settings.Text = "Настройки";
             this.settings.UseVisualStyleBackColor = true;
             this.settings.Click += new System.EventHandler(this.settings_Click);
-            // 
-            // autoСonnection
-            // 
-            this.autoСonnection.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.autoСonnection.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.autoСonnection.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.autoСonnection.Location = new System.Drawing.Point(0, 106);
-            this.autoСonnection.Name = "autoСonnection";
-            this.autoСonnection.Size = new System.Drawing.Size(172, 33);
-            this.autoСonnection.TabIndex = 0;
-            this.autoСonnection.Text = "Автоподключение";
-            this.autoСonnection.UseVisualStyleBackColor = true;
-            this.autoСonnection.Click += new System.EventHandler(this.AutoСonnectionClick);
             // 
             // panel2
             // 
@@ -172,7 +158,6 @@ namespace TemperatureSensor
         private System.IO.Ports.SerialPort mySerialPort;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button autoСonnection;
         private System.Windows.Forms.Button settings;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
     }
