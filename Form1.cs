@@ -20,7 +20,7 @@ namespace TemperatureSensor
 
         public static bool isOpenPort = false;
 
-        public static string portName = "";
+        public static string  portName = "";
 
         int portBaudRate = 9600;
 
