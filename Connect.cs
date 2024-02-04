@@ -16,6 +16,7 @@ namespace TemperatureSensor
             ScanAutomaticPort(ref Form1.portName);
         }
 
+        bool superPortOpen = false;
         private void ScanAutomaticPort(ref string portName)
         {
             string key = "term";
@@ -23,59 +24,78 @@ namespace TemperatureSensor
             int portBaudRate = 9600;
             int dataBytes = 0;
 
-            //MessageBox.Show("Начинаем скан портов");
-
-            foreach (string port in SerialPort.GetPortNames())
+            // MessageBox.Show("Начинаем скан портов");
+            while (superPortOpen == false)
             {
-                SerialPort serialPort = new SerialPort(port);
-
-                if (serialPort.IsOpen == false)
+                foreach (string port in SerialPort.GetPortNames())
                 {
-                    serialPort.Open();
 
-                    // MessageBox.Show($" {port} открыт {serialPort.IsOpen}");
+                    SerialPort serialPort = new SerialPort(port);
 
-                    serialPort.BaudRate = portBaudRate;
-                }
-
-                // MessageBox.Show($"Слушаем порт {port}");
-
-                DateTime startTime = DateTime.Now;
-
-                TimeSpan duration = TimeSpan.FromSeconds(3);
-
-                while ((DateTime.Now - startTime) < duration) // Слушаем порт 2 сикунды
-                {
-                    dataBytes = serialPort.BytesToRead;
-                }
-
-                if (dataBytes > 0)
-                {
-                    Form1.Package = serialPort.ReadLine();
-
-                    if (Form1.Package.StartsWith(key))
+                    if (serialPort.IsOpen == false)
                     {
-                        serialPort.Close();
+                        // MessageBox.Show($"{serialPort.IsOpen}");
 
-                        // MessageBox.Show($"Нашли наш порт {port}");
 
-                        // Connect(port, portBaudRate);
+                        serialPort.Open();
 
-                        Form1.isOpenPort = true;
 
-                        portName = port;
+                        // MessageBox.Show($" {port} открыт {serialPort.IsOpen}");
 
-                        break;
+                        serialPort.BaudRate = portBaudRate;
+
+
                     }
-                }
-                else
-                {
-                    // MessageBox.Show($"Порт {port} молчит");
 
-                    serialPort.Close();
-                }
+                    MessageBox.Show($"Слушаем порт {port}");
 
-                System.Threading.Thread.Sleep(100); // Добавить небольшую задержку перед следующей проверкой
+                    DateTime startTime = DateTime.Now;
+
+                    TimeSpan duration = TimeSpan.FromSeconds(4);
+
+                    MessageBox.Show($"Начинаем считывать данные из буфера порта");
+
+                    while ((DateTime.Now - startTime) < duration) // Слушаем порт 2 сикунды
+                    {
+                        dataBytes = serialPort.BytesToRead;
+                    }
+
+                    if (dataBytes > 0)
+                    {
+                        MessageBox.Show($"Есть какието данные на порту");
+
+
+                        Form1.Package = serialPort.ReadLine();
+
+                        MessageBox.Show("Глюк");
+
+                        if (Form1.Package.StartsWith(key)) // тут проблема при повторном подключении
+                        {
+                            MessageBox.Show("Глюк2");
+                            serialPort.Close();
+
+                            MessageBox.Show($"Нашли наш порт {port}");
+
+                            // Connect(port, portBaudRate);
+
+                            // Form1.isOpenPort = true;
+
+                            portName = port;
+
+                            superPortOpen = true;
+
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        // MessageBox.Show($"Порт {port} молчит");
+
+                        serialPort.Close();
+                    }
+
+                    // System.Threading.Thread.Sleep(100); // Добавить небольшую задержку перед следующей проверкой
+                }
             }
         }
     }

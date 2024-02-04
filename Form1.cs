@@ -38,22 +38,35 @@ namespace TemperatureSensor
 
         private async Task СheckСonnectionAsync() 
         {
-           await Task.Run(() => СheckСonnection());
+           await Task.Run(async () => СheckСonnection());
         }
         private void СheckСonnection() 
         {
             while (true)
             {
-                if (mySerialPort.IsOpen == false)
+                while (mySerialPort.IsOpen == false)
                 {
+                   // label1.ForeColor = Color.FromArgb(58, 204, 41);
+                     
                     label1.Text = "гон";
+
+                   
 
                     Connect connect = new Connect();
 
                     Connect(portName,portBaudRate);
+
+                   // MessageBox.Show($"Мы внутри ифа");
+
                 }
+                   // isOpenPort = true;
+
+              //  MessageBox.Show($"Мы вышли из ифа");
+
             }
+           // MessageBox.Show($"Мы вышли из вайла");
         }
+
         public int CriticalTemperature { get; private set; }
 
         
