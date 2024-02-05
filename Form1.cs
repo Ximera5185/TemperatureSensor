@@ -46,8 +46,10 @@ namespace TemperatureSensor
             {
                 while (mySerialPort.IsOpen == false)
                 {
-                   // label1.ForeColor = Color.FromArgb(58, 204, 41);
-                     
+                    // label1.ForeColor = Color.FromArgb(58, 204, 41);
+
+                   // Package = null;
+
                     label1.Text = "гон";
 
                    

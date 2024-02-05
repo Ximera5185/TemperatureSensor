@@ -16,7 +16,7 @@ namespace TemperatureSensor
             ScanAutomaticPort(ref Form1.portName);
         }
 
-        bool superPortOpen = false;
+        bool isPortOpen = false;
         private void ScanAutomaticPort(ref string portName)
         {
             string key = "term";
@@ -25,7 +25,7 @@ namespace TemperatureSensor
             int dataBytes = 0;
 
             // MessageBox.Show("Начинаем скан портов");
-            while (superPortOpen == false)
+            while (isPortOpen == false)
             {
                 foreach (string port in SerialPort.GetPortNames())
                 {
@@ -47,13 +47,13 @@ namespace TemperatureSensor
 
                     }
 
-                    MessageBox.Show($"Слушаем порт {port}");
+                   // MessageBox.Show($"Слушаем порт {port}");
 
                     DateTime startTime = DateTime.Now;
 
                     TimeSpan duration = TimeSpan.FromSeconds(4);
 
-                    MessageBox.Show($"Начинаем считывать данные из буфера порта");
+                   // MessageBox.Show($"Начинаем считывать данные из буфера порта");
 
                     while ((DateTime.Now - startTime) < duration) // Слушаем порт 2 сикунды
                     {
@@ -62,19 +62,24 @@ namespace TemperatureSensor
 
                     if (dataBytes > 0)
                     {
-                        MessageBox.Show($"Есть какието данные на порту");
+                        // MessageBox.Show($"Есть какието данные на порту");
 
+                        serialPort.DiscardInBuffer();
 
                         Form1.Package = serialPort.ReadLine();
 
-                        MessageBox.Show("Глюк");
+                     // MessageBox.Show("Считали пакет с ключем");
 
+                           // MessageBox.Show($"{Form1.Package}");
+                            
                         if (Form1.Package.StartsWith(key)) // тут проблема при повторном подключении
                         {
-                            MessageBox.Show("Глюк2");
+                            // MessageBox.Show("Передали пакет с ключем");
+
+
                             serialPort.Close();
 
-                            MessageBox.Show($"Нашли наш порт {port}");
+                           // MessageBox.Show($"Нашли наш порт {port}");
 
                             // Connect(port, portBaudRate);
 
@@ -82,10 +87,11 @@ namespace TemperatureSensor
 
                             portName = port;
 
-                            superPortOpen = true;
+                            isPortOpen = true;
 
                             break;
                         }
+                        else { MessageBox.Show("Кривой пакет"); }
                     }
                     else
                     {
