@@ -9,24 +9,27 @@ namespace TemperatureSensor
     {
         public Connect()
         {
-            ScanAutomaticPort(ref Form1.portName);
+            PortBaudRate = 9600;
+
+            ScanAutomaticPort(ref Form1.PortName);
         }
 
-        public void Connecting(string portName, int portBaudRate, SerialPort serialPort)
+        private int PortBaudRate { get; set; }
+
+        public void Connecting(string portName, SerialPort serialPort)
         {
             serialPort.PortName = portName;
 
             serialPort.Open();
-            
-            serialPort.BaudRate = portBaudRate;
+
+            serialPort.BaudRate = PortBaudRate;
         }
         private void ScanAutomaticPort(ref string portName)
         {
             SerialPort serialPort;
 
             string key = "term";
-
-            int portBaudRate = 9600;
+            
             int dataBytes = 0;
             int delayTime = 2;
 
@@ -42,7 +45,7 @@ namespace TemperatureSensor
                     {
                         serialPort.Open();
 
-                        serialPort.BaudRate = portBaudRate;
+                        serialPort.BaudRate = PortBaudRate;
                     }
 
                     DateTime startTime = DateTime.Now;
@@ -58,9 +61,9 @@ namespace TemperatureSensor
                     {
                         serialPort.DiscardInBuffer();
 
-                        Form1.Package = serialPort.ReadLine();
+                        Form1.SetPackage(serialPort.ReadLine());
 
-                        if (Form1.Package.StartsWith(key))
+                        if (Form1.GetPackage().StartsWith(key))
                         {
                             serialPort.Close();
 

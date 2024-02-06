@@ -10,23 +10,14 @@ namespace TemperatureSensor
 {
     public partial class Form1 : Form
     {
-        Connect connect;
-
-        private int _temperature;
-
-        private string _temperatureString = "";
-
-        private string _fileName = "settings.txt";
-
         public static bool isOpenPort = false;
-
-        public static string portName = "";
-
-        readonly int portBaudRate = 9600;
-
-        public static string Package { set; get; }
+        public static string PortName = "";
         public Form1()
         {
+            TemperatureString = "";
+
+            FileSettingsName = "settings.txt";
+
             InitializeComponent();
 
             SetSavedCriticalTemperature();
@@ -34,6 +25,20 @@ namespace TemperatureSensor
             СheckСonnectionAsync();
         }
 
+        private static string Package { set; get; }
+        private int Temperature { get; set; }
+        private string TemperatureString { get; set;}
+        private string FileSettingsName { get; set; }
+
+        public static void SetPackage(string package) 
+        {
+            Package = package;
+        }
+
+        public static string GetPackage()
+        {
+           return Package;
+        }
         private async Task СheckСonnectionAsync()
         {
             await Task.Run(async () => СheckСonnection());
@@ -51,7 +56,7 @@ namespace TemperatureSensor
 
                     Connect connect = new Connect();
 
-                    connect.Connecting(portName,portBaudRate,mySerialPort);
+                    connect.Connecting(PortName,mySerialPort);
                 }
             }
         }
@@ -66,13 +71,13 @@ namespace TemperatureSensor
 
         private void SetSavedCriticalTemperature()
         {
-            if (File.Exists(_fileName) == false)
+            if (File.Exists(FileSettingsName) == false)
             {
-                File.WriteAllText(_fileName, CriticalTemperature.ToString());
+                File.WriteAllText(FileSettingsName, CriticalTemperature.ToString());
             }
             else
             {
-                string temperature = File.ReadAllText(_fileName);
+                string temperature = File.ReadAllText(FileSettingsName);
 
                 CriticalTemperature = Convert.ToInt32(temperature);
             }
@@ -80,13 +85,12 @@ namespace TemperatureSensor
 
         private void MySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            string inputData = File.ReadAllText(_fileName);
+            string inputData = File.ReadAllText(FileSettingsName);
 
             label4.Visible = false;
 
             if (isOpenPort)
             {
-
                 mySerialPort.Write(inputData);
             }
 
@@ -96,13 +100,13 @@ namespace TemperatureSensor
 
             Package = mySerialPort.ReadLine();
 
-            _temperatureString = Package.Substring(4);
+            TemperatureString = Package.Substring(4);
 
-            _temperature = Convert.ToInt32(_temperatureString);
+            Temperature = Convert.ToInt32(TemperatureString);
 
-            label1.Invoke((MethodInvoker) delegate {label1.Text = _temperatureString;});
+            label1.Invoke((MethodInvoker) delegate {label1.Text = TemperatureString;});
 
-            ChangeColor(_temperature, CriticalTemperature);
+            ChangeColor(Temperature, CriticalTemperature);
         }
 
         private void ChangeColor(int temperature, int criticalTemperature)
@@ -121,7 +125,7 @@ namespace TemperatureSensor
             }
         }
        
-        private void settings_Click(object sender, EventArgs e)
+        private void SettingsClick(object sender, EventArgs e)
         {
             FormSettings formSettings = new FormSettings();
 

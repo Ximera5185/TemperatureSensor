@@ -36,11 +36,11 @@ namespace TemperatureSensor
             this.panel1 = new System.Windows.Forms.Panel();
             this.settings = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.mySerialPort = new System.IO.Ports.SerialPort(this.components);
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
@@ -81,7 +81,7 @@ namespace TemperatureSensor
             this.settings.TabIndex = 1;
             this.settings.Text = "Настройки";
             this.settings.UseVisualStyleBackColor = true;
-            this.settings.Click += new System.EventHandler(this.settings_Click);
+            this.settings.Click += new System.EventHandler(this.SettingsClick);
             // 
             // panel2
             // 
@@ -94,6 +94,17 @@ namespace TemperatureSensor
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(172, 100);
             this.panel2.TabIndex = 0;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Nirmala UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(204)))), ((int)(((byte)(41)))));
+            this.label4.Location = new System.Drawing.Point(8, 46);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(161, 21);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Поиск устройства";
             // 
             // label3
             // 
@@ -127,17 +138,6 @@ namespace TemperatureSensor
             // 
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Nirmala UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(204)))), ((int)(((byte)(41)))));
-            this.label4.Location = new System.Drawing.Point(8, 46);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(161, 21);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Поиск устройства";
             // 
             // Form1
             // 
