@@ -40,6 +40,7 @@ namespace TemperatureSensor
             this.label2 = new System.Windows.Forms.Label();
             this.mySerialPort = new System.IO.Ports.SerialPort(this.components);
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
@@ -54,9 +55,8 @@ namespace TemperatureSensor
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(204)))), ((int)(((byte)(41)))));
             this.label1.Location = new System.Drawing.Point(76, 32);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(90, 50);
+            this.label1.Size = new System.Drawing.Size(0, 50);
             this.label1.TabIndex = 3;
-            this.label1.Text = "нет";
             // 
             // panel1
             // 
@@ -85,6 +85,7 @@ namespace TemperatureSensor
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.label1);
@@ -127,6 +128,17 @@ namespace TemperatureSensor
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Nirmala UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(204)))), ((int)(((byte)(41)))));
+            this.label4.Location = new System.Drawing.Point(8, 46);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(161, 21);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Поиск устройства";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -160,6 +172,7 @@ namespace TemperatureSensor
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button settings;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
+        private Label label4;
     }
 }
 

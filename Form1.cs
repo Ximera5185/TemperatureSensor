@@ -20,10 +20,9 @@ namespace TemperatureSensor
 
         public static bool isOpenPort = false;
 
-        public static string  portName = "";
+        public static string portName = "";
 
-        int portBaudRate = 9600;
-
+        readonly int portBaudRate = 9600;
 
         public static string Package { set; get; }
         public Form1()
@@ -32,50 +31,39 @@ namespace TemperatureSensor
 
             SetSavedCriticalTemperature();
 
-
             СheckСonnectionAsync();
         }
 
-        private async Task СheckСonnectionAsync() 
+        private async Task СheckСonnectionAsync()
         {
-           await Task.Run(async () => СheckСonnection());
+            await Task.Run(async () => СheckСonnection());
         }
-        private void СheckСonnection() 
+
+        private void СheckСonnection()
         {
             while (true)
             {
                 while (mySerialPort.IsOpen == false)
                 {
-                    // label1.ForeColor = Color.FromArgb(58, 204, 41);
+                    label1.Text = "";
 
-                   // Package = null;
-
-                    label1.Text = "гон";
-
-                   
+                    label4.Visible = true;
 
                     Connect connect = new Connect();
 
-                    Connect(portName,portBaudRate);
-
-                   // MessageBox.Show($"Мы внутри ифа");
-
+                    connect.Connecting(portName,portBaudRate,mySerialPort);
                 }
-                   // isOpenPort = true;
-
-              //  MessageBox.Show($"Мы вышли из ифа");
-
             }
-           // MessageBox.Show($"Мы вышли из вайла");
         }
 
         public int CriticalTemperature { get; private set; }
 
-        
         public void SetCriticalTemperature(int temperature)
+
         {
             CriticalTemperature = temperature;
         }
+
         private void SetSavedCriticalTemperature()
         {
             if (File.Exists(_fileName) == false)
@@ -90,17 +78,17 @@ namespace TemperatureSensor
             }
         }
 
-
         private void MySerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             string inputData = File.ReadAllText(_fileName);
 
+            label4.Visible = false;
 
             if (isOpenPort)
             {
+
                 mySerialPort.Write(inputData);
             }
-
 
             int.TryParse(inputData, out int numbers);
 
@@ -111,24 +99,11 @@ namespace TemperatureSensor
             _temperatureString = Package.Substring(4);
 
             _temperature = Convert.ToInt32(_temperatureString);
-    
-          
-               
-                     label1.Invoke((MethodInvoker) delegate
-                     {
-                         label1.Text = _temperatureString;
-                     }
-                     );
-          
-           
-            
+
+            label1.Invoke((MethodInvoker) delegate {label1.Text = _temperatureString;});
 
             ChangeColor(_temperature, CriticalTemperature);
-
-
         }
-
-
 
         private void ChangeColor(int temperature, int criticalTemperature)
         {
@@ -145,97 +120,12 @@ namespace TemperatureSensor
                 label2.ForeColor = Color.FromArgb(58, 204, 41);
             }
         }
-        /* private void ScanAutomaticPort( ref string portName) 
-         {   
-             string key = "term";
-
-             int delay = 2000;
-             int portBaudRate = 9600;
-
-             MessageBox.Show("Начинаем скан портов");
-
-             foreach (string port in SerialPort.GetPortNames())
-             {
-                 SerialPort serialPort = new SerialPort(port);
-
-                 if (serialPort.IsOpen == false)
-                 {
-                     serialPort.Open();
-
-                     MessageBox.Show($" {port} открыт {serialPort.IsOpen}");
-                     serialPort.BaudRate = portBaudRate;
-                 }
-
-                 Thread.Sleep(delay);
-
-                 MessageBox.Show($"Слушаем порт {port}");
-
-                 if (serialPort.BytesToRead > 0) // тут косяк
-                 {
-                     _package = serialPort.ReadLine();
-
-                     if (_package.StartsWith(key))
-                     {
-                         serialPort.Close();
-
-                         MessageBox.Show($"Нашли наш порт {port}");
-
-                         Connect(port, portBaudRate);
-
-                         isOpenPort = true;
-
-                         portName = port;
-
-                         break;
-                     }
-                 }
-                 else
-                 {
-                     MessageBox.Show($"Порт {port} молчит");
-
-                     serialPort.Close();
-                 }
-             }
-         } */
-        public void Connect(string portName, int portBaudRate)
-        {
-            mySerialPort.PortName = portName;
-
-            mySerialPort.Open();
-
-            mySerialPort.BaudRate = portBaudRate;
-
-           /* autoСonnection.Enabled = true;
-
-            autoСonnection.Text = "Отключиться";*/
-        }
-
-      /*  private void AutoСonnectionClick(object sender, EventArgs e)
-        {
-
-            string nameOfButton = "Автоподключение";
-
-
-            if (autoСonnection.Text == nameOfButton)
-            {
-                Connect(portName, portBaudRate);
-            }
-            else if (autoСonnection.Text == "Отключиться")
-            {
-                mySerialPort.Close();
-
-                label1.Text = "";
-
-                autoСonnection.Text = "Автоподключение";
-            }
-        }*/
-
+       
         private void settings_Click(object sender, EventArgs e)
         {
             FormSettings formSettings = new FormSettings();
 
             formSettings.ShowDialog();
         }
-
     }
 }
