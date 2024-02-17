@@ -89,10 +89,12 @@ namespace TemperatureSensor
 
             label4.Visible = false;
 
-            if (isOpenPort)
-            {
+           /* if (isOpenPort)
+            {*/
                 mySerialPort.Write(inputData);
-            }
+               /* MessageBox.Show("Отдали запись в фаил");*/
+           /* }*/
+            /*MessageBox.Show("Не отдали запись ");*/
 
             int.TryParse(inputData, out int numbers);
 
