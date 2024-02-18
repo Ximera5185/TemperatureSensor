@@ -2,7 +2,7 @@
 
 namespace TemperatureSensor
 {
-    partial class Form1
+    partial class Device1
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -92,8 +92,9 @@ namespace TemperatureSensor
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(172, 100);
+            this.panel2.Size = new System.Drawing.Size(172, 83);
             this.panel2.TabIndex = 0;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // label4
             // 
@@ -105,6 +106,7 @@ namespace TemperatureSensor
             this.label4.Size = new System.Drawing.Size(161, 21);
             this.label4.TabIndex = 6;
             this.label4.Text = "Поиск устройства";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label3
             // 

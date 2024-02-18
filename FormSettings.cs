@@ -14,7 +14,7 @@ namespace TemperatureSensor
 {
     public partial class FormSettings : Form
     {
-        Form1 form1 = new Form1();
+        Device1 form1 = new Device1();
 
         public FormSettings()
         {

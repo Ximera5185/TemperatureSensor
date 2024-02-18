@@ -11,7 +11,7 @@ namespace TemperatureSensor
         {
             PortBaudRate = 9600;
 
-            ScanAutomaticPort(ref Form1.PortName);
+            ScanAutomaticPort(ref Device1.PortName);
         }
 
         private int PortBaudRate { get; set; }
@@ -61,9 +61,9 @@ namespace TemperatureSensor
                     {
                         serialPort.DiscardInBuffer();
 
-                        Form1.SetPackage(serialPort.ReadLine());
+                        Device1.SetPackage(serialPort.ReadLine());
 
-                        if (Form1.GetPackage().StartsWith(key))
+                        if (Device1.GetPackage().StartsWith(key))
                         {
                             serialPort.Close();
 

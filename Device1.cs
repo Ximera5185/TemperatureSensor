@@ -8,11 +8,11 @@ using System.Windows.Forms;
 
 namespace TemperatureSensor
 {
-    public partial class Form1 : Form
+    public partial class Device1 : Form
     {
         public static bool isOpenPort = false;
         public static string PortName = "";
-        public Form1()
+        public Device1()
         {
             TemperatureString = "";
 
@@ -132,6 +132,16 @@ namespace TemperatureSensor
             FormSettings formSettings = new FormSettings();
 
             formSettings.ShowDialog();
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
