@@ -1,10 +1,7 @@
 ﻿#include "max6675.h"
 #include <EEPROM.h>
-
-int thermoDO = 2;  //он же SO
-int thermoCS = 3;
-int thermoCLK = 4;  //он же SCK
-int ledPin = 13;    // переменная с пином подключенного светодиода
+volatile int counter = 0;  // переменная-счётчик
+int ledPin = 13;                    // переменная с пином подключенного светодиода
 
 int temperature;
 int criticalTemperature;
@@ -12,12 +9,17 @@ int lastCritical;
 
 String inputDataTemperaturePort = "";
 
-MAX6675 thermocouple(thermoCLK, thermoCS, thermoDO);
 
-int vccPin = 5;  //пин для питания
-int gndPin = 6;  //пин для земли
+int thermoDO = 3;                     //он же SO датчик температуры
+int thermoCS = 4;                     //CS
+int thermoCLK = 5;                   //он же SCK датчик температуры
+int vccPin = 6;                      //vcc пин для питания датчик температуры
+int gndPin = 7;                     //gnd пин для земли датчик температуры
+
 String key = "term";
 String package;
+
+MAX6675 thermocouple(thermoCLK, thermoCS, thermoDO);
 
 void setup() {
   Serial.begin(9600);
@@ -26,9 +28,11 @@ void setup() {
   digitalWrite(vccPin, HIGH);
   pinMode(gndPin, OUTPUT);
   digitalWrite(gndPin, LOW);
-  pinMode(ledPin, OUTPUT);  // назначаем наш пин выходом
-  pinMode(8, INPUT);        //Используем 5 пин датчик оборотов
-
+  pinMode(ledPin, OUTPUT);         // назначаем наш пин выходом
+  pinMode(8, INPUT);              //Используем 5 пин датчик оборотов
+// подключили кнопку на D2 и GND
+  pinMode(2, FALLING);  //FALLING (падение) – срабатывает при изменении сигнала с HIGH на LOW
+  attachInterrupt(0, btnIsr, FALLING); //FALLING (падение) – срабатывает при изменении сигнала с HIGH на LOW
   //ждем стабилизации чипа MAX
   delay(500);
 }
@@ -36,9 +40,9 @@ void setup() {
 void loop() {
   criticalTemperature = 100;
   //Выводим показания в монитор порта
-  //Serial.println((int)thermocouple.readCelsius());
+
   temperature = (int)thermocouple.readCelsius();
-  //package = key + (int)thermocouple.readCelsius();
+
   package = key + temperature;
 
   Serial.println(package);
@@ -51,25 +55,8 @@ void loop() {
     EEPROM.update(0, criticalTemperature);
   }
 
-  // Serial.println(criticalTemperature);
+  TurnAlarm(EEPROM.read(0));
 
-  //lastCritical = criticalTemperature;
-  // if(Serial.available()  0)
-  //   {
-
-  //   }
-  // else
-  //   {
-  //   criticalTemperature =  lastCritical;
-
-  // }
-
-  //criticalTemperature = inputDataTemperaturePort.toInt();
-
-  //Serial.println(EEPROM.read(0));
-  // Serial.println(lastCritical);
-
- TurnAlarm(EEPROM.read(0));
   HallSensor();
   //delay(1000);  // Найти у Гайвера цикл таймера Gyver
 }
@@ -83,10 +70,10 @@ void TurnAlarm(int criticalTemperature) {
 }
 
 void HallSensor() {
-                    //задержка 0.5 сек
-  if (digitalRead(8) == LOW) {  //если на пин падает сигнал низкого уровня
-    Serial.println("+");        //срабатывание
-  } else {                      //в противном случае
-    Serial.println("-");        //нет срабатывания
-  }
+
+ Serial.println(counter);  // выводим
 };
+
+void btnIsr() {
+  counter++;  // + нажатие
+}
