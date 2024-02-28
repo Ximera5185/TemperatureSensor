@@ -41,6 +41,7 @@ namespace TemperatureSensor
             this.label2 = new System.Windows.Forms.Label();
             this.mySerialPort = new System.IO.Ports.SerialPort(this.components);
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
@@ -141,19 +142,30 @@ namespace TemperatureSensor
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
             // 
-            // Form1
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(230, 12);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // Device1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(810, 578);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.panel1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "Form1";
+            this.Name = "Device1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Экструдер для производства рукавных пленок";
             this.panel1.ResumeLayout(false);
@@ -175,6 +187,7 @@ namespace TemperatureSensor
         private System.Windows.Forms.Button settings;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
         private Label label4;
+        private Button button1;
     }
 }
 
